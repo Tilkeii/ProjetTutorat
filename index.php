@@ -223,6 +223,7 @@ session_start();
 </html>
 
 <?php
+
 $bdd = new PDO('mysql:host=localhost;dbname=projetbase;charset=utf8', 'root', '');
 
 //Inscription
@@ -251,7 +252,6 @@ if (isset($_POST['submit_inscription'])) {
             'email' => $email
         ));
         ?><script>swal("Good job!", "Inscription validee!", "success");</script><?php
-        echo "inscription valide";
         echo htmlspecialchars($_POST['nom']);
     } // pas besoin de else : deja gerer dans la fonction
 }
