@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <?php
 session_start();
-	if(isset($_SESSION['login']) and isset($_SESSION['pass']) and $_SESSION['login'] == $_GET['id'])
+	if(isset($_SESSION['login']) and isset($_SESSION['pass']))
 	{
 	?>
 		<html>
@@ -40,7 +40,7 @@ session_start();
 							<div id="navbar">
 								<ul id="navbar_menu_pc" class="menu">
 									<li id="menu_modification" class="navbar_menu_item"><a href="#" >Modifier le profil</a></li>
-									<li id="menu_deconnexion" class="navbar_menu_item"><a href="deconnexion.php">Deconnexion</a></li>
+									<li id="menu_deconnexion" class="navbar_menu_item"><a href="deconnection.php">Deconnexion</a></li>
 								</ul>
 							</div>
 						</div>

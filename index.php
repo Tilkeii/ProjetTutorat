@@ -1,6 +1,6 @@
 <?php
-    ob_start(); //Permet de mettre le header n'importe ou dans le code : sinon doit se placer avant le code html
-    session_start();
+ob_start(); //Permet de mettre le header n'importe ou dans le code : sinon doit se placer avant le code html
+session_start();
 ?>
 <!--<?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
@@ -8,216 +8,218 @@
  <xsl:template match="enbref">-->
 <!DOCTYPE html>
 <html>
-	<!-- head -->
-	<head>
-		<link rel="stylesheet" href="foundation/css/foundation.css"/>
-		<link rel="stylesheet" href="foundation/css/app.css"/>
-		<link rel="stylesheet" href="CSS/default.css"/>
+<!-- head -->
+<head>
+    <link rel="stylesheet" href="foundation/css/foundation.css"/>
+    <link rel="stylesheet" href="foundation/css/app.css"/>
+    <link rel="stylesheet" href="CSS/default.css"/>
+    <link rel="stylesheet" type="text/css" href="sweetalert-master/dist/sweetalert.css">
 
-		<script src="foundation/js/vendor/modernizr.js"></script>
-	</head>
+    <script src="sweetalert-master/dist/sweetalert.min.js"></script>
+    <script src="foundation/js/vendor/modernizr.js"></script>
+</head>
 
-	<!-- body -->
-	<body>
-		<div class="off-canvas-wrap" data-offcanvas>
-			<div class="inner-wrap">
-				<!-- debut banniere -->
+<!-- body -->
+<body>
+<div class="off-canvas-wrap" data-offcanvas>
+    <div class="inner-wrap">
+        <!-- debut banniere -->
 
-				<!-- en-tete mobile -->
-				<div id="ban_mobile" class="show-for-small-down">
-					<div id="navbar">
-						<ul>
-							<li class="left-off-canvas-toggle menu-icon"><a href="#" ><span>Menu</span></a></li>
-						</ul>
-					</div>
-					<aside class="left-off-canvas-menu">
-						<ul id="navbar_menu_mobile" class="menu">
-							<li><a href="#">Accueil</a></li>
-							<li><a href="#" data-reveal-id="inscription-modal">Inscription</a></li>
-							<li><a href="#" data-reveal-id="connexion-modal">Connexion</a></li>
-						</ul>
-					</aside>
-				</div>
+        <!-- en-tete mobile -->
+        <div id="ban_mobile" class="show-for-small-down">
+            <div id="navbar">
+                <ul>
+                    <li class="left-off-canvas-toggle menu-icon"><a href="#" ><span>Menu</span></a></li>
+                </ul>
+            </div>
+            <aside class="left-off-canvas-menu">
+                <ul id="navbar_menu_mobile" class="menu">
+                    <li><a href="#">Accueil</a></li>
+                    <li><a href="#" data-reveal-id="inscription-modal">Inscription</a></li>
+                    <li><a href="#" data-reveal-id="connexion-modal">Connexion</a></li>
+                </ul>
+            </aside>
+        </div>
 
-				<!-- en-tete pc -->
-				<div id="ban_pc" class="show-for-medium-up">
-					<div id="ban_img">
+        <!-- en-tete pc -->
+        <div id="ban_pc" class="show-for-medium-up">
+            <div id="ban_img">
 
-					</div>
-					<div id="navbar">
-						<ul id="navbar_menu_pc" class="menu">
-							<li id="menu_accueil" class="navbar_menu_item"><a href="#">Accueil</a></li>
-							<li id="menu_inscription" class="navbar_menu_item"><a href="#" data-reveal-id="inscription-modal">Inscription</a></li>
-                            <li id="menu_connexion" class="navbar_menu_item"><a href="#" data-reveal-id="connexion-modal">Connexion</a></li>
-                        </ul>
+            </div>
+            <div id="navbar">
+                <ul id="navbar_menu_pc" class="menu">
+                    <li id="menu_accueil" class="navbar_menu_item"><a href="#">Accueil</a></li>
+                    <li id="menu_inscription" class="navbar_menu_item"><a href="#" data-reveal-id="inscription-modal">Inscription</a></li>
+                    <li id="menu_connexion" class="navbar_menu_item"><a href="#" data-reveal-id="connexion-modal">Connexion</a></li>
+                </ul>
+            </div>
+
+            <div id="inscription-modal" class="reveal-modal tiny" data-reveal aria-labelledby="inscription" aria-hidden="true" role="dialog">
+                <!-- Page inscription here -->
+                <h3>Inscription</h3>
+                <span id="error1" style="display: none; color: red;">L'identifiant existe deja<br /></span>
+                <span id="error2" style="display: none; color: red;">L'adresse email existe deja<br /></span>
+                <span id="error3" style="display: none; color: red;">L'identifiant doit etre composer de 8 chiffres<br /></span>
+                <span id="error4" style="display: none; color: red;">Le nom doit comporter que des lettres (entre 2 et 30)<br /></span> <!-- Erreurs Verification Serveur -->
+                <span id="error5" style="display: none; color: red;">Le prenom doit comporter que des lettres (entre 2 et 30)<br /></span>
+                <span id="error6" style="display: none; color: red;">Une adresse email valide est requise<br /></span>
+                <span id="error7" style="display: none; color: red;">Un mot de passe est requis (entre 6 et 30 caracteres)<br />Caracteres speciaux acceptes : !@#$%_;:,*?.<br /></span>
+                <span id="error8" style="display: none; color: red;">Les mots de passe ne correspondent pas</span>
+                <form data-abide action="" method="post"> <!-- PATTERN PAS FAIT -->
+                    <div class="row">
+                        <div class="small-12 columns">
+                            <div class="name-field">
+                                <label>Identifiant <small>required</small>
+                                    <input type="text" name="identifiant" placeholder=""  required pattern="identifiant"/>
+                                </label>
+                                <small class="error">L'identifiant doit etre composer de 8 chiffres</small>
+                            </div>
+                        </div>
                     </div>
-
-                    <div id="inscription-modal" class="reveal-modal tiny" data-reveal aria-labelledby="inscription" aria-hidden="true" role="dialog">
-                        <!-- Page inscription here -->
-                        <h3>Inscription</h3>
-                        <span id="error1" style="display: none; color: red;">L'identifiant existe deja<br /></span>
-                        <span id="error2" style="display: none; color: red;">L'adresse email existe deja<br /></span>
-                        <span id="error3" style="display: none; color: red;">L'identifiant doit etre composer de 8 chiffres<br /></span>
-                        <span id="error4" style="display: none; color: red;">Le nom doit comporter que des lettres (entre 2 et 30)<br /></span> <!-- Erreurs Verification Serveur -->
-                        <span id="error5" style="display: none; color: red;">Le prenom doit comporter que des lettres (entre 2 et 30)<br /></span>
-                        <span id="error6" style="display: none; color: red;">Une adresse email valide est requise<br /></span>
-                        <span id="error7" style="display: none; color: red;">Un mot de passe est requis (entre 6 et 30 caracteres)<br />Caracteres speciaux acceptes : !@#$%_;:,*?.<br /></span>
-                        <span id="error8" style="display: none; color: red;">Les mots de passe ne correspondent pas</span>
-                        <form data-abide action="" method="post"> <!-- PATTERN PAS FAIT -->
-                            <div class="row">
-                                <div class="small-12 columns">
-                                    <div class="name-field">
-                                        <label>Identifiant <small>required</small>
-                                            <input type="text" name="identifiant" placeholder=""  required pattern="identifiant"/>
-                                        </label>
-                                        <small class="error">L'identifiant doit etre composer de 8 chiffres</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="small-12 columns">
-                                    <label>Nom <small>required</small>
-                                        <input type="text" name="nom" placeholder=""  required pattern="nom_prenom"/>
-                                    </label>
-                                    <small class="error">Le nom doit comporter que des lettres (entre 2 et 30)</small>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="small-12 columns">
-                                    <label>Prenom <small>required</small>
-                                        <input type="text" name="prenom" placeholder="" required pattern="nom_prenom"/>
-                                    </label>
-                                    <small class="error">Le prenom doit comporter que des lettres (entre 2 et 30)</small>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="small-12 columns">
-                                    <label> Email <small>required</small>
-                                        <input type="email" name="email" placeholder="" required pattern="email"/>
-                                    </label>
-                                    <small class="error">Une adresse email est valide requise</small>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="small-12 columns">
-                                    <label> Mot de passe <small>required</small>
-                                        <input id="password" type="password" name="pass" placeholder="" required pattern="password"/>
-                                    </label>
-                                    <small class="error">Un mot de passe est requis (entre 6 et 30 caracteres)</small>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="small-12 columns">
-                                    <label> Confirmation mot de passe <small>required</small>
-                                        <input type="password" name="pass_verif" placeholder="" required pattern="password" data-equalto="password" />
-                                    </label>
-                                    <small class="error">Les mots de passe ne correspondent pas</small>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="small-8 columns">
-                                    <label> Departement <small>required</small>
-                                        <select name="formation" required>
-                                            <option value="">Selectionner un departement</option>
-                                            <option value="GEII">Genie Electrique et Informatique</option>
-                                            <option value="INFO">Informatique</option>
-                                            <option value="MMI">Metiers du multimedia et de l'Internet</option>
-                                            <option value="RT">Reseaux et Telecommunication</option>
-                                        </select>
-                                    </label>
-                                    <small class="error">Selectionner un departement</small>
-                                </div>
-                                <div class="small-4 columns">
-                                    <label> Annee <small>required</small>
-                                        <select name="annee" required>
-                                            <option value="">Annee</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                        </select>
-                                    </label>
-                                    <small class="error">Selectionner une annee</small>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="small-12 small-centered text-center columns">
-                                    <input class="button small secondary" type="submit" name="submit_inscription" value="Valider" />
-                                </div>
-                            </div>
-                        </form>
-                        <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+                    <div class="row">
+                        <div class="small-12 columns">
+                            <label>Nom <small>required</small>
+                                <input type="text" name="nom" placeholder=""  required pattern="nom_prenom"/>
+                            </label>
+                            <small class="error">Le nom doit comporter que des lettres (entre 2 et 30)</small>
+                        </div>
                     </div>
-
-
-                    <div id="connexion-modal" class="reveal-modal tiny" data-reveal aria-labelledby="connexion" aria-hidden="true" role="dialog">
-                        <!-- Page connexion here -->
-                        <h3>Connexion</h3>
-                        <span id="error9" style="display: none; color: red;">Identifiant ou mot de passe introuvable<br /></span>
-                        <span id="error10" style="display: none; color: red;">L'identifiant doit etre composer de 8 chiffres<br /></span>
-                        <span id="error11" style="display: none; color: red;">Un mot de passe est requis (entre 6 et 30 caracteres)<br />Caracteres speciaux acceptes : !@#$%_;:,*?.</span>
-                        <form data-abide action="" method="post">
-                             <div class="row">
-                                <div class="small-12 columns">
-                                    <label>Identifiant
-                                        <input type="text" name="id"  placeholder=""required pattern="identifiant"/>
-                                    </label>
-                                    <small class="error">L'identifiant doit etre composer de 8 chiffres</small>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="small-12 columns">
-                                    <label> Mot de passe
-                                        <input type="password" name="passconnexion" placeholder="" required pattern="password"/>
-                                    </label>
-                                    <small class="error">Un mot de passe est requis (entre 6 et 30 caracteres)</small>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="small-12 small-centered text-center columns">
-                                    <input class="button small secondary" type="submit" name="submit_connexion" value="Valider" />
-                                </div>
-                            </div>
-                        </form>
-                        <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+                    <div class="row">
+                        <div class="small-12 columns">
+                            <label>Prenom <small>required</small>
+                                <input type="text" name="prenom" placeholder="" required pattern="nom_prenom"/>
+                            </label>
+                            <small class="error">Le prenom doit comporter que des lettres (entre 2 et 30)</small>
+                        </div>
                     </div>
+                    <div class="row">
+                        <div class="small-12 columns">
+                            <label> Email <small>required</small>
+                                <input type="email" name="email" placeholder="" required pattern="email"/>
+                            </label>
+                            <small class="error">Une adresse email est valide requise</small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="small-12 columns">
+                            <label> Mot de passe <small>required</small>
+                                <input id="password" type="password" name="pass" placeholder="" required pattern="password"/>
+                            </label>
+                            <small class="error">Un mot de passe est requis (entre 6 et 30 caracteres)</small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="small-12 columns">
+                            <label> Confirmation mot de passe <small>required</small>
+                                <input type="password" name="pass_verif" placeholder="" required pattern="password" data-equalto="password" />
+                            </label>
+                            <small class="error">Les mots de passe ne correspondent pas</small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="small-8 columns">
+                            <label> Departement <small>required</small>
+                                <select name="formation" required>
+                                    <option value="">Selectionner un departement</option>
+                                    <option value="GEII">Genie Electrique et Informatique</option>
+                                    <option value="INFO">Informatique</option>
+                                    <option value="MMI">Metiers du multimedia et de l'Internet</option>
+                                    <option value="RT">Reseaux et Telecommunication</option>
+                                </select>
+                            </label>
+                            <small class="error">Selectionner un departement</small>
+                        </div>
+                        <div class="small-4 columns">
+                            <label> Annee <small>required</small>
+                                <select name="annee" required>
+                                    <option value="">Annee</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                </select>
+                            </label>
+                            <small class="error">Selectionner une annee</small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="small-12 small-centered text-center columns">
+                            <input class="button small secondary" type="submit" name="submit_inscription" value="Valider" />
+                        </div>
+                    </div>
+                </form>
+                <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+            </div>
 
-				<!-- fin banniere -->
 
-				<div id="contenu">
-					<h1>Bienvenue sur le projet tutorat</h1>
-					<p>Si vous êtes étudiant à l'IUT de Vélizy, alors ce site est fait pour vous.
-					Avec ce site et une fois inscrit, vous pourrez demander de l'aide aux autres étudiants
-					inscrits dans des matières où vous avez des difficultés.<br /> A l'inverse vous pouvez aussi
-					proposer de l'aide dans des matières où vous avez de bonnes capacités.<br />
-					Bonne navigation sur notre site !<br /><br />
-					NOTE: En vous inscrivant ou connectant sur ce site, vous acceptez l'utilisation de cookies
-					afin d'améliorer votre navigation. Vous accepter aussi de ne pas poster/écrire de contenus
-					inappropriés : dans le cas contraire, votre compte sera définitevement supprimé sans préavis
-					par nos administrateurs.
+            <div id="connexion-modal" class="reveal-modal tiny" data-reveal aria-labelledby="connexion" aria-hidden="true" role="dialog">
+                <!-- Page connexion here -->
+                <h3>Connexion</h3>
+                <span id="error9" style="display: none; color: red;">Identifiant ou mot de passe introuvable<br /></span>
+                <span id="error10" style="display: none; color: red;">L'identifiant doit etre composer de 8 chiffres<br /></span>
+                <span id="error11" style="display: none; color: red;">Un mot de passe est requis (entre 6 et 30 caracteres)<br />Caracteres speciaux acceptes : !@#$%_;:,*?.</span>
+                <form data-abide action="" method="post">
+                    <div class="row">
+                        <div class="small-12 columns">
+                            <label>Identifiant
+                                <input type="text" name="id"  placeholder=""required pattern="identifiant"/>
+                            </label>
+                            <small class="error">L'identifiant doit etre composer de 8 chiffres</small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="small-12 columns">
+                            <label> Mot de passe
+                                <input type="password" name="passconnexion" placeholder="" required pattern="password"/>
+                            </label>
+                            <small class="error">Un mot de passe est requis (entre 6 et 30 caracteres)</small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="small-12 small-centered text-center columns">
+                            <input class="button small secondary" type="submit" name="submit_connexion" value="Valider" />
+                        </div>
+                    </div>
+                </form>
+                <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+            </div>
 
-					</p>
-				</div>
+            <!-- fin banniere -->
 
-			    <?php include 'includes/footer.php' ?>
+            <div id="contenu">
+                <h1>Bienvenue sur le projet tutorat</h1>
+                <p>Si vous êtes étudiant à l'IUT de Vélizy, alors ce site est fait pour vous.
+                    Avec ce site et une fois inscrit, vous pourrez demander de l'aide aux autres étudiants
+                    inscrits dans des matières où vous avez des difficultés.<br /> A l'inverse vous pouvez aussi
+                    proposer de l'aide dans des matières où vous avez de bonnes capacités.<br />
+                    Bonne navigation sur notre site !<br /><br />
+                    NOTE: En vous inscrivant ou connectant sur ce site, vous acceptez l'utilisation de cookies
+                    afin d'améliorer votre navigation. Vous accepter aussi de ne pas poster/écrire de contenus
+                    inappropriés : dans le cas contraire, votre compte sera définitevement supprimé sans préavis
+                    par nos administrateurs.
 
-				<a class="exit-off-canvas"></a>
+                </p>
+            </div>
 
-		</div>
+            <?php include 'includes/footer.php' ?>
 
-	<script src="foundation/js/vendor/jquery.js"></script>
-	<script src="foundation/js/foundation.min.js"></script>
-	<script>
-        $(document).foundation({
-            abide: {
-                patterns: {
-                    identifiant: /^([0-9]){8}$/, //CUSTOM PATERN
-                    nom_prenom: /^([a-zA-Z ]){2,30}$/,
-                    password: /^[a-zA-Z0-9!@#$%_;:,*?.]{6,30}$/
+            <a class="exit-off-canvas"></a>
+
+        </div>
+
+        <script src="foundation/js/vendor/jquery.js"></script>
+        <script src="foundation/js/foundation.min.js"></script>
+        <script>
+            $(document).foundation({
+                    abide: {
+                        patterns: {
+                            identifiant: /^([0-9]){8}$/, //CUSTOM PATERN
+                            nom_prenom: /^([a-zA-Z ]){2,30}$/,
+                            password: /^[a-zA-Z0-9!@#$%_;:,*?.]{6,30}$/
+                        }
+                    }
                 }
-            }
-        }
-        );
-    </script>
-	</body>
+            );
+        </script>
+</body>
 </html>
 
 <?php
@@ -241,13 +243,14 @@ if (isset($_POST['submit_inscription'])) {
 
         $req = $bdd->prepare('INSERT INTO etudiant(numero_etudiant, mdp, nom, prenom, email) VALUES(:identifiant, :pass, :nom, :prenom, :email)');
 
-		$req->execute(array(
+        $req->execute(array(
             'identifiant' => $identifiant,
             'pass' => $pass,
             'nom' => $nom,
             'prenom' => $prenom,
             'email' => $email
         ));
+        ?><script>swal("Good job!", "Inscription validee!", "success");</script><?php
         echo "inscription valide";
         echo htmlspecialchars($_POST['nom']);
     } // pas besoin de else : deja gerer dans la fonction
@@ -281,7 +284,7 @@ if(isset($_POST['submit_connexion'])) {
         {
             $_SESSION['login'] = $id;
             $_SESSION['pass'] = $passconnexion;
-            header('Location: membre.php?id='.$id.'');
+            header('Location: membre.php');
             ob_end_flush();
         }
     }
