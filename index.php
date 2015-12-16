@@ -224,7 +224,7 @@ session_start();
 
 <?php
 
-$bdd = new PDO('mysql:host=localhost;dbname=projetbase;charset=utf8', 'root', '');
+$bdd = new PDO('mysql:host=localhost;dbname=projetbase;charset=utf8', 'root', 'iamthelamb1');
 
 //Inscription
 
@@ -241,15 +241,26 @@ if (isset($_POST['submit_inscription'])) {
 
     if(formValideInscription($bdd,$identifiant,$email,$nom,$prenom,$pass,$pass_verif))
     {
+		
+		/*
+		$reqfind = $bdd->prepare('SELECT id_grp from groupe where filiere = :departement AND annee = :annee');
+        $reqfind->execute(array(
+            'departement' => $departement,
+            'annee' => $annee));
+        $resultatfind = $reqfind->fetch();
+		echo $resultatfind['id_grp'];*/
 
-        $req = $bdd->prepare('INSERT INTO etudiant(numero_etudiant, mdp, nom, prenom, email) VALUES(:identifiant, :pass, :nom, :prenom, :email)');
 
+
+        $req = $bdd->prepare('INSERT INTO etudiant(numero_etudiant, mdp, nom, prenom, email,id_grp) VALUES(:identifiant, :pass, :nom, :prenom, :email, :id_grp)');
         $req->execute(array(
             'identifiant' => $identifiant,
             'pass' => $pass,
             'nom' => $nom,
             'prenom' => $prenom,
-            'email' => $email
+            'email' => $email,
+			'id_grp' => $resultatfind['id_grp']
+			
         ));
         ?><script>swal("Good job!", "Inscription validee!", "success");</script><?php
         echo htmlspecialchars($_POST['nom']);
