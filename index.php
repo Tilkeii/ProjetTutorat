@@ -59,9 +59,9 @@ session_start();
                 <h3>Inscription</h3>
                 <span id="error1" style="display: none; color: red;">L'identifiant existe deja<br /></span>
                 <span id="error2" style="display: none; color: red;">L'adresse email existe deja<br /></span>
-                <span id="error3" style="display: none; color: red;">L'identifiant doit etre composer de 8 chiffres<br /></span>
-                <span id="error4" style="display: none; color: red;">Le nom doit comporter que des lettres (entre 2 et 30)<br /></span> <!-- Erreurs Verification Serveur -->
-                <span id="error5" style="display: none; color: red;">Le prenom doit comporter que des lettres (entre 2 et 30)<br /></span>
+                <span id="error3" style="display: none; color: red;">L'identifiant doit etre compose de 8 chiffres<br /></span>
+                <span id="error4" style="display: none; color: red;">Le nom ne doit comporter que des lettres (entre 2 et 30)<br /></span> <!-- Erreurs Verification Serveur -->
+                <span id="error5" style="display: none; color: red;">Le prenom ne doit comporter que des lettres (entre 2 et 30)<br /></span>
                 <span id="error6" style="display: none; color: red;">Une adresse email valide est requise<br /></span>
                 <span id="error7" style="display: none; color: red;">Un mot de passe est requis (entre 6 et 30 caracteres)<br />Caracteres speciaux acceptes : !@#$%_;:,*?.<br /></span>
                 <span id="error8" style="display: none; color: red;">Les mots de passe ne correspondent pas</span>
@@ -72,7 +72,7 @@ session_start();
                                 <label>Identifiant <small>required</small>
                                     <input type="text" name="identifiant" placeholder=""  required pattern="identifiant"/>
                                 </label>
-                                <small class="error">L'identifiant doit etre composer de 8 chiffres</small>
+                                <small class="error">L'identifiant doit etre compose de 8 chiffres</small>
                             </div>
                         </div>
                     </div>
@@ -81,7 +81,7 @@ session_start();
                             <label>Nom <small>required</small>
                                 <input type="text" name="nom" placeholder=""  required pattern="nom_prenom"/>
                             </label>
-                            <small class="error">Le nom doit comporter que des lettres (entre 2 et 30)</small>
+                            <small class="error">Le nom ne doit comporter que des lettres (entre 2 et 30)</small>
                         </div>
                     </div>
                     <div class="row">
@@ -89,7 +89,7 @@ session_start();
                             <label>Prenom <small>required</small>
                                 <input type="text" name="prenom" placeholder="" required pattern="nom_prenom"/>
                             </label>
-                            <small class="error">Le prenom doit comporter que des lettres (entre 2 et 30)</small>
+                            <small class="error">Le prenom ne doit comporter que des lettres (entre 2 et 30)</small>
                         </div>
                     </div>
                     <div class="row">
@@ -97,7 +97,7 @@ session_start();
                             <label> Email <small>required</small>
                                 <input type="email" name="email" placeholder="" required pattern="email"/>
                             </label>
-                            <small class="error">Une adresse email est valide requise</small>
+                            <small class="error">Une adresse email valide est requise</small>
                         </div>
                     </div>
                     <div class="row">
@@ -224,7 +224,7 @@ session_start();
 
 <?php
 
-$bdd = new PDO('mysql:host=localhost;dbname=projetbase;charset=utf8', 'root', '');
+$bdd = new PDO('mysql:host=localhost;dbname=projetbase;charset=utf8', 'root', 'iamthelamb1');
 
 //Inscription
 
@@ -242,13 +242,13 @@ if (isset($_POST['submit_inscription'])) {
     if(formValideInscription($bdd,$identifiant,$email,$nom,$prenom,$pass,$pass_verif))
     {
 		
-		/*
+		
 		$reqfind = $bdd->prepare('SELECT id_grp from groupe where filiere = :departement AND annee = :annee');
         $reqfind->execute(array(
             'departement' => $departement,
             'annee' => $annee));
         $resultatfind = $reqfind->fetch();
-		echo $resultatfind['id_grp'];*/
+		echo $resultatfind['id_grp'];
 
 
 
