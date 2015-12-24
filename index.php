@@ -224,7 +224,7 @@ session_start();
 
 <?php
 
-$bdd = new PDO('mysql:host=localhost;dbname=projetbase;charset=utf8', 'root', 'iamthelamb1');
+$bdd = new PDO('mysql:host=localhost;dbname=projetbase;charset=utf8', 'root', '');
 
 //Inscription
 
