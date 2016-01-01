@@ -1,11 +1,9 @@
 <?php
 ob_start(); //Permet de mettre le header n'importe ou dans le code : sinon doit se placer avant le code html
 session_start();
+$bdd = new PDO('mysql:host=sql.e-tutorat.tk;dbname=w4130d_tutorat;charset=utf8', 'w4130d_tutorat', '159753Tu');
 ?>
-<!--<?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
- <xsl:output encoding="utf-8" method="html"/>
- <xsl:template match="enbref">-->
+
 <!DOCTYPE html>
 <html>
 <!-- head -->
@@ -235,7 +233,6 @@ session_start();
 
 <?php
 
-$bdd = new PDO('mysql:host=localhost;dbname=projetbase;charset=utf8', 'root', '');
 
 //Inscription
 
