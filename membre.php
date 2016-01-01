@@ -1,6 +1,12 @@
 ﻿<!DOCTYPE html>
 <?php
 session_start();
+try {
+	$bdd = new PDO('mysql:host=sql.e-tutorat.tk;dbname=w4130d_tutorat;charset=utf8', 'w4130d_tutorat', '159753Tu');
+} catch (PDOException $e) {
+	print "Erreur !: " . $e->getMessage() . "<br/>";
+	die();
+}
 	if(isset($_SESSION['login']) and isset($_SESSION['pass']))
 	{
 	?>
@@ -42,7 +48,6 @@ session_start();
 									<li id="menu_modification" class="navbar_menu_item"><a href="#" >Modifier le profil</a></li>
 									<li id="menu_deconnexion" class="navbar_menu_item"><a href="deconnection.php">Deconnexion</a></li>
 									<?php
-										$bdd = new PDO('mysql:host=localhost;dbname=projetbase;charset=utf8', 'root', '');
 										$reqfind = $bdd->prepare('SELECT id_priv from etudiant where numero_etudiant = :num');
 										$reqfind->execute(array(
 											'num' => $_SESSION['login']));

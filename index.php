@@ -1,7 +1,12 @@
 <?php
 ob_start(); //Permet de mettre le header n'importe ou dans le code : sinon doit se placer avant le code html
 session_start();
-$bdd = new PDO('mysql:host=sql.e-tutorat.tk;dbname=w4130d_tutorat;charset=utf8', 'w4130d_tutorat', '159753Tu');
+try {
+    $bdd = new PDO('mysql:host=sql.e-tutorat.tk;dbname=w4130d_tutorat;charset=utf8', 'w4130d_tutorat', '159753Tu');
+} catch (PDOException $e) {
+    print "Erreur !: " . $e->getMessage() . "<br/>";
+    die();
+}
 ?>
 
 <!DOCTYPE html>
