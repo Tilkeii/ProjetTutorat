@@ -65,6 +65,7 @@ session_start();
                 <span id="error6" style="display: none; color: red;">Une adresse email valide est requise<br /></span>
                 <span id="error7" style="display: none; color: red;">Un mot de passe est requis (entre 6 et 30 caracteres)<br />Caracteres speciaux acceptes : !@#$%_;:,*?.<br /></span>
                 <span id="error8" style="display: none; color: red;">Les mots de passe ne correspondent pas</span>
+				<span id="error12" style="display: none; color: red;">L'âge ne doit comporter que 2 lettres</span>
                 <form data-abide action="" method="post"> <!-- PATTERN PAS FAIT -->
                     <div class="row">
                         <div class="small-12 columns">
@@ -140,6 +141,15 @@ session_start();
                             <small class="error">Selectionner une annee</small>
                         </div>
                     </div>
+					<div class="row">
+                        <div class="small-4 columns">
+                        	<label> Age <small> optional </small>
+								<input type="text" name="age" placeholder=""  pattern="age"/>
+							</label>
+							<small class="error">L'age doit être composé de 2 lettres</small>
+						</div>
+                    </div>
+
                     <div class="row">
                         <div class="small-12 small-centered text-center columns">
                             <input class="button small secondary" type="submit" name="submit_inscription" value="Valider" />
@@ -213,7 +223,8 @@ session_start();
                         patterns: {
                             identifiant: /^([0-9]){8}$/, //CUSTOM PATERN
                             nom_prenom: /^([a-zA-Z ]){2,30}$/,
-                            password: /^[a-zA-Z0-9!@#$%_;:,*?.]{6,30}$/
+                            password: /^[a-zA-Z0-9!@#$%_;:,*?.]{6,30}$/,
+							age: /^([0-9]){2}$/
                         }
                     }
                 }
@@ -238,32 +249,36 @@ if (isset($_POST['submit_inscription'])) {
     $pass_verif = sha1($_POST['pass_verif']);
     $departement= htmlspecialchars($_POST['formation']);
     $annee = htmlspecialchars($_POST['annee']);
+	$age = htmlspecialchars($_POST['age']);
+	if(!isset($age) or empty($age)){
+		echo "hello";
+		$age==NULL;
+	}
 
-    if(formValideInscription($bdd,$identifiant,$email,$nom,$prenom,$pass,$pass_verif))
+    if(formValideInscription($bdd,$identifiant,$email,$nom,$prenom,$pass,$pass_verif,$age))
     {
 		
-		
+		//requete pour recuperer le groupe par rapport a la formation et a l'annee
 		$reqfind = $bdd->prepare('SELECT id_grp from groupe where filiere = :departement AND annee = :annee');
         $reqfind->execute(array(
             'departement' => $departement,
             'annee' => $annee));
         $resultatfind = $reqfind->fetch();
-		echo $resultatfind['id_grp'];
+		//fin requete 
 
 
-
-        $req = $bdd->prepare('INSERT INTO etudiant(numero_etudiant, mdp, nom, prenom, email,id_grp) VALUES(:identifiant, :pass, :nom, :prenom, :email, :id_grp)');
+        $req = $bdd->prepare('INSERT INTO etudiant(numero_etudiant, mdp, nom, prenom, email,id_grp,age) VALUES(:identifiant, :pass, :nom, :prenom, :email, :id_grp, :age)');
         $req->execute(array(
             'identifiant' => $identifiant,
             'pass' => $pass,
             'nom' => $nom,
             'prenom' => $prenom,
             'email' => $email,
+			'age' => $age,
 			'id_grp' => $resultatfind['id_grp']
 			
         ));
         ?><script>swal("Good job!", "Inscription validee!", "success");</script><?php
-        echo htmlspecialchars($_POST['nom']);
     } // pas besoin de else : deja gerer dans la fonction
 }
 
@@ -301,7 +316,7 @@ if(isset($_POST['submit_connexion'])) {
     }
 }
 
-function formValideInscription($bdd,$identifiant,$email,$nom,$prenom,$pass,$pass_verif){
+function formValideInscription($bdd,$identifiant,$email,$nom,$prenom,$pass,$pass_verif,$age){
     $valide = true;
 
     //Requete
@@ -367,7 +382,21 @@ function formValideInscription($bdd,$identifiant,$email,$nom,$prenom,$pass,$pass
         </script><?php
         $valide = false;
     }
-
+	//BETA
+	if (!preg_match('/^([0-9]){2}$/', $age))
+    {
+    	if($age != NULL)
+		{
+			?>
+        	<script>
+            	$('#inscription-modal').foundation('reveal', 'open');
+            	document.getElementById('error12').style.display = 'inline';
+        	</script>
+        	<?php
+        	$valide = false;
+		}
+    }
+	//FIN BETA
     if (!filter_var($email,FILTER_VALIDATE_EMAIL)) {
         ?>
         <script>

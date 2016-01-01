@@ -73,6 +73,11 @@ body {
 	transition: background .5s;
 }
 
+#menu_administration:hover{
+	background: #3366CC;
+	transition: background .5s;
+}
+
 
 #contenu{
 	text-align:justify;

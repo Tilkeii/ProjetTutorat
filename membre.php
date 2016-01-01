@@ -35,12 +35,24 @@ session_start();
 						<!-- en-tete pc -->
 						<div id="ban_pc" class="show-for-medium-up">
 							<div id="ban_img">
-
+							
 							</div>
 							<div id="navbar">
 								<ul id="navbar_menu_pc" class="menu">
 									<li id="menu_modification" class="navbar_menu_item"><a href="#" >Modifier le profil</a></li>
 									<li id="menu_deconnexion" class="navbar_menu_item"><a href="deconnection.php">Deconnexion</a></li>
+									<?php
+										$bdd = new PDO('mysql:host=localhost;dbname=projetbase;charset=utf8', 'root', '');
+										$reqfind = $bdd->prepare('SELECT id_priv from etudiant where numero_etudiant = :num');
+										$reqfind->execute(array(
+											'num' => $_SESSION['login']));
+										$resultatfind = $reqfind->fetch();
+									  	if($resultatfind['id_priv'] == 2){
+											?><li id="menu_administration" class="navbar_menu_item"><a href="#" >Administration</a></li><?php
+									   	}
+									?>
+
+									  
 								</ul>
 							</div>
 						</div>
