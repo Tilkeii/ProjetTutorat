@@ -63,6 +63,45 @@ try {
 						</div>
 					</div>
 				</div>
+
+				<!-- info perso -->
+
+				<div class="row">
+					<h4>Informations :</h4>
+					<div class="small-6 columns">
+						<p>Numero etudiant : <?php echo $_SESSION['login'] ?></p>
+						<?php
+							$req = $bdd->query("SELECT * FROM etudiant WHERE numero_etudiant = ".$_SESSION['login']."");
+							$resp = $req->fetchAll(PDO::FETCH_ASSOC);
+						?>
+						<p>Nom : <?php echo $resp[0]['nom'];?></p>
+						<p>Prenom : <?php echo $resp[0]['prenom'];?></p>
+					</div>
+					<div class="small-6 columns">
+						<p>Age : <?php if($resp[0]['age'] == NULL){echo "Non renseigné";} else{ echo $resp[0]['age'];}?></p>
+						<p>email : <?php echo $resp[0]['email'];?></p>
+						<p>Groupe : <?php $reqgroupe = $bdd->query("SELECT filiere,annee FROM groupe,etudiant WHERE groupe.id_grp = etudiant.id_grp AND numero_etudiant = ".$_SESSION['login'].""); $resgroupe = $reqgroupe->fetchAll(PDO::FETCH_ASSOC); echo $resgroupe[0]['filiere']." - "; echo $resgroupe[0]['annee'];?></p>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="small-6 columns">
+						<h4>Demande d'aide</h4>
+						<div class="small-12 columns">
+
+						</div>
+					</div>
+					<div class="small-6 columns">
+						<h4>Proposition d'aide</h4>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="small-12 columns">
+
+					</div>
+				</div>
+
 				<script src="foundation/js/vendor/jquery.js"></script>
 				<script src="foundation/js/foundation.min.js"></script>
 				<script>
