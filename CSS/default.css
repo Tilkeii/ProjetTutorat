@@ -73,21 +73,41 @@ body {
 	transition: background .5s;
 }
 
-#menu_administration:hover{
-	background: #3366CC;
-	transition: background .5s;
-}
-
-
-#contenu{
-	text-align:justify;
-}
-
 #footer{
 	background:#333;
 	text-align:center;
 	color:#FFF;
 	padding:10px;
+}
+
+#logo_partenaire{
+	display:inline;
+}
+
+/* contenu */
+
+#content {
+	width:60%;
+	margin-left:auto;
+	margin-right:auto;
+	text-align:justify;
+	padding-top: 15px;
+}
+
+/* formulaires */
+textarea{
+	resize: none;
+}
+
+textarea::-webkit-input-placeholder{
+	font-style: italic;
+}
+
+/* navbar */
+
+.fixed{
+	position:fixed;
+	top:0px;
 }
 
 /* flo */

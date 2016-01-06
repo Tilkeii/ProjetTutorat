@@ -12,18 +12,14 @@ try {
 <!DOCTYPE html>
 <html>
 <!-- head -->
-<head>
-    <link rel="stylesheet" href="foundation/css/foundation.css"/>
-    <link rel="stylesheet" href="foundation/css/app.css"/>
-    <link rel="stylesheet" href="CSS/default.css"/>
-    <link rel="stylesheet" type="text/css" href="sweetalert-master/dist/sweetalert.css">
-
-    <script src="sweetalert-master/dist/sweetalert.min.js"></script>
-    <script src="foundation/js/vendor/modernizr.js"></script>
-</head>
+<?php include('includes/head.php'); ?>
 
 <!-- body -->
 <body>
+<?php
+    if(isset($_SESSION['login']) and isset($_SESSION['pass']))
+        include("includes/menu.php");
+    else {?>
 <div class="off-canvas-wrap" data-offcanvas>
     <div class="inner-wrap">
         <!-- debut banniere -->
@@ -68,7 +64,6 @@ try {
                 <span id="error6" style="display: none; color: red;">Une adresse email valide est requise<br /></span>
                 <span id="error7" style="display: none; color: red;">Un mot de passe est requis (entre 6 et 30 caracteres)<br />Caracteres speciaux acceptes : !@#$%_;:,*?.<br /></span>
                 <span id="error8" style="display: none; color: red;">Les mots de passe ne correspondent pas</span>
-				<span id="error12" style="display: none; color: red;">L'âge ne doit comporter que 2 lettres</span>
                 <form data-abide action="" method="post"> <!-- PATTERN PAS FAIT -->
                     <div class="row">
                         <div class="small-12 columns">
@@ -144,18 +139,9 @@ try {
                             <small class="error">Selectionner une annee</small>
                         </div>
                     </div>
-					<div class="row">
-                        <div class="small-4 columns">
-                        	<label> Age <small> optional </small>
-								<input type="text" name="age" placeholder=""  pattern="age"/>
-							</label>
-							<small class="error">L'age doit être composé de 2 lettres</small>
-						</div>
-                    </div>
-
                     <div class="row">
                         <div class="small-12 small-centered text-center columns">
-                            <input class="button small secondary" type="submit" name="submit_inscription" value="Valider" />
+                            <input style="margin-top: 15px; margin-bottom: 0px;" class="button small secondary" type="submit" name="submit_inscription" value="Valider" />
                         </div>
                     </div>
                 </form>
@@ -194,18 +180,17 @@ try {
                 </form>
                 <a class="close-reveal-modal" aria-label="Close">&#215;</a>
             </div>
-
+            <?php };?>
             <!-- fin banniere -->
 
-            <div id="contenu">
+            <div id="content">
                 <h1>Bienvenue sur le projet tutorat</h1>
                 <p>Si vous êtes étudiant à l'IUT de Vélizy, alors ce site est fait pour vous.
                     Avec ce site et une fois inscrit, vous pourrez demander de l'aide aux autres étudiants
                     inscrits dans des matières où vous avez des difficultés.<br /> A l'inverse vous pouvez aussi
                     proposer de l'aide dans des matières où vous avez de bonnes capacités.<br />
                     Bonne navigation sur notre site !<br /><br />
-                    NOTE: En vous inscrivant ou connectant sur ce site, vous acceptez l'utilisation de cookies
-                    afin d'améliorer votre navigation. Vous accepter aussi de ne pas poster/écrire de contenus
+                    NOTE: En vous inscrivant ou connectant sur ce site, vVous acceptez aussi de ne pas poster/écrire de contenus
                     inappropriés : dans le cas contraire, votre compte sera définitevement supprimé sans préavis
                     par nos administrateurs.
 
@@ -217,17 +202,17 @@ try {
             <a class="exit-off-canvas"></a>
 
         </div>
+        </div>
+    </div>
 
-        <script src="foundation/js/vendor/jquery.js"></script>
-        <script src="foundation/js/foundation.min.js"></script>
+    <?php include('includes/footer_scripts.php'); ?>
         <script>
             $(document).foundation({
                     abide: {
                         patterns: {
                             identifiant: /^([0-9]){8}$/, //CUSTOM PATERN
                             nom_prenom: /^([a-zA-Z ]){2,30}$/,
-                            password: /^[a-zA-Z0-9!@#$%_;:,*?.]{6,30}$/,
-							age: /^([0-9]){2}$/
+                            password: /^[a-zA-Z0-9!@#$%_;:,*?.]{6,30}$/
                         }
                     }
                 }
@@ -238,11 +223,9 @@ try {
 
 <?php
 
-
 //Inscription
 
 if (isset($_POST['submit_inscription'])) {
-    echo "Inscription submit";
     $identifiant = htmlspecialchars($_POST['identifiant']);
     $nom = htmlspecialchars($_POST['nom']);
     $prenom = htmlspecialchars($_POST['prenom']);
@@ -251,37 +234,32 @@ if (isset($_POST['submit_inscription'])) {
     $pass_verif = sha1($_POST['pass_verif']);
     $departement= htmlspecialchars($_POST['formation']);
     $annee = htmlspecialchars($_POST['annee']);
-	$age = htmlspecialchars($_POST['age']);
-	if(!isset($age) or empty($age)){
-		echo "hello";
-		$age==NULL;
-	}
 
-    if(formValideInscription($bdd,$identifiant,$email,$nom,$prenom,$pass,$pass_verif,$age))
+    if(formValideInscription($bdd,$identifiant,$email,$nom,$prenom,$pass,$pass_verif))
     {
 		
-		//requete pour recuperer le groupe par rapport a la formation et a l'annee
+		//Requete pour recuperer le groupe par rapport a la formation et a l'annee	
 		$reqfind = $bdd->prepare('SELECT id_grp from groupe where filiere = :departement AND annee = :annee');
         $reqfind->execute(array(
             'departement' => $departement,
             'annee' => $annee));
         $resultatfind = $reqfind->fetch();
-		//fin requete 
 
 
-        $req = $bdd->prepare('INSERT INTO etudiant(numero_etudiant, mdp, nom, prenom, email,id_grp,age) VALUES(:identifiant, :pass, :nom, :prenom, :email, :id_grp, :age)');
+
+        $req = $bdd->prepare('INSERT INTO etudiant(numero_etudiant, mdp, nom, prenom, email,id_grp) VALUES(:identifiant, :pass, :nom, :prenom, :email, :id_grp)');
         $req->execute(array(
             'identifiant' => $identifiant,
             'pass' => $pass,
             'nom' => $nom,
             'prenom' => $prenom,
             'email' => $email,
-			'age' => $age,
 			'id_grp' => $resultatfind['id_grp']
 			
         ));
         ?><script>swal("Good job!", "Inscription validee!", "success");</script><?php
-    } // pas besoin de else : deja gerer dans la fonction
+        echo htmlspecialchars($_POST['nom']);
+    } // pas besoin de else : deja geré dans la fonction
 }
 
 // Connexion
@@ -312,13 +290,13 @@ if(isset($_POST['submit_connexion'])) {
         {
             $_SESSION['login'] = $id;
             $_SESSION['pass'] = $passconnexion;
-            header('Location: membre.php');
+            header('Location: profile.php');
             ob_end_flush();
         }
     }
 }
 
-function formValideInscription($bdd,$identifiant,$email,$nom,$prenom,$pass,$pass_verif,$age){
+function formValideInscription($bdd,$identifiant,$email,$nom,$prenom,$pass,$pass_verif){
     $valide = true;
 
     //Requete
@@ -384,21 +362,7 @@ function formValideInscription($bdd,$identifiant,$email,$nom,$prenom,$pass,$pass
         </script><?php
         $valide = false;
     }
-	//BETA
-	if (!preg_match('/^([0-9]){2}$/', $age))
-    {
-    	if($age != NULL)
-		{
-			?>
-        	<script>
-            	$('#inscription-modal').foundation('reveal', 'open');
-            	document.getElementById('error12').style.display = 'inline';
-        	</script>
-        	<?php
-        	$valide = false;
-		}
-    }
-	//FIN BETA
+
     if (!filter_var($email,FILTER_VALIDATE_EMAIL)) {
         ?>
         <script>
