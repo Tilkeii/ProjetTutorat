@@ -23,9 +23,11 @@
         <div id="navbar">
             <ul id="navbar_menu_pc" class="menu">
                 <li id="menu_index" class="navbar_menu_item"><a href="index.php">Accueil</a></li>
-                <li id="menu_liste_posts" class="navbar_menu_item"><a href="list.php" >Dernières annonces</a></li>
-                <li id="menu_liste_egolist" class="navbar_menu_item"><a href="egolist.php" >Mes annonces</a></li>
+                <li id="menu_liste_posts" class="navbar_menu_item"><a href="list.php" >Dernières demandes</a></li>
+                <li id="menu_liste_egolist" class="navbar_menu_item"><a href="egolist.php" >Mes Demandes</a></li>
+		<li id="menu_proposition" class="navbar_menu_item"><a href="proposition.php" >Mes Propositions</a></li>
                 <li id="menu_modification" class="navbar_menu_item"><a href="profile.php" >Mon profil</a></li>
+		
                 <?php
      			$req = $bdd->prepare('SELECT id_priv from etudiant where numero_etudiant = :num');
                 $req->execute(array(

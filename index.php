@@ -185,12 +185,12 @@ try {
 
             <div id="content">
                 <h1>Bienvenue sur le projet tutorat</h1>
-                <p>Si vous êtes étudiant à l'IUT de Vélizy, alors ce site est fait pour vous.
+                <p>Si vous êtes étudiant à l'IUT de Vélizy, alors ce site est fait pour vous.<br />
                     Avec ce site et une fois inscrit, vous pourrez demander de l'aide aux autres étudiants
                     inscrits dans des matières où vous avez des difficultés.<br /> A l'inverse vous pouvez aussi
                     proposer de l'aide dans des matières où vous avez de bonnes capacités.<br />
                     Bonne navigation sur notre site !<br /><br />
-                    NOTE: En vous inscrivant ou connectant sur ce site, vVous acceptez aussi de ne pas poster/écrire de contenus
+                    NOTE: En vous inscrivant ou connectant sur ce site, vous acceptez aussi de ne pas poster/écrire de contenus
                     inappropriés : dans le cas contraire, votre compte sera définitevement supprimé sans préavis
                     par nos administrateurs.
 

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <?php
 session_start();
 try {
@@ -13,8 +13,8 @@ if(isset($_SESSION['login']) and isset($_SESSION['pass']))
 // recuperation des annonces
 
 $req = $bdd->prepare('SELECT nom_mat,commentaire,date_publication
-							from needhelp
-							left join matiere on needhelp.id_mat = matiere.id_mat
+							from helper
+							left join matiere on helper.id_mat = matiere.id_mat
 							where numero_etudiant = :id
 							order by date_publication desc');
 $req->execute(array(
@@ -41,7 +41,7 @@ $matieres = $req->fetchAll();
 		<div class="row">
 			<div class="large-8 small-12 columns"><h3>Mes demandes d'aide</h3></div>
 			<div class="large-4 small-12 columns"><input type="submit" class="button small" style="width:100%"
-														 value="Poster une annonce" data-reveal-id="newpost-modal"/>
+														 value="Poster une proposition d'aide" data-reveal-id="newpost-modal"/>
 			</div>
 		</div>
 		<table class="hover">
@@ -61,14 +61,14 @@ $matieres = $req->fetchAll();
 			?>
 	</div>
 
-	<!-- Formulaire ajouter annonce -->
+	<!-- Formulaire ajouter proposition -->
 	<div id="newpost-modal" class="reveal-modal small" data-reveal aria-labelledby="newpost" aria-hidden="true"
 		 role="dialog">
 		<!-- Page connexion here -->
 		<h3>Nouvelle annonce</h3>
 		<span id="error1" style="display: none; color: red;">Commentaire trop long.<br/></span>
 		<span id="error2" style="display: none; color: red;">La matière choisie est inconnue.</span>
-		<span id="error4" style="display: none; color: red;">Vous ne pouvez pas publier plus de 3 annonces à la fois.</span>
+		<span id="error4" style="display: none; color: red;">Vous ne pouvez pas publier plus de 3 propositions à la fois.</span>
 		<span id="error5" style="display: none; color: red;">Vous avez déjà demandé de l'aide dans cette matière.</span>
 
 		<form data-abide action="" method="post">
@@ -90,7 +90,7 @@ $matieres = $req->fetchAll();
 					<label> Commentaire
 						<small class="chars_info"></small>
 						<textarea class="commentaire" name="commentaire" rows="3" maxlength="160"
-								  placeholder="Courte description du problème..." required></textarea>
+								  placeholder="Courte description des connaissances..." required></textarea>
 					</label>
 				</div>
 			</div>
@@ -103,7 +103,7 @@ $matieres = $req->fetchAll();
 		<a class="close-reveal-modal" aria-label="Close">&#215;</a>
 	</div>
 
-	<!-- formulaire supprimer annonce -->
+	<!-- formulaire supprimer proposition -->
 	<div id="delete-modal" class="reveal-modal small" data-reveal aria-labelledby="delete" aria-hidden="true"
 		 role="dialog">
 		<!-- Page connexion here -->
@@ -112,7 +112,7 @@ $matieres = $req->fetchAll();
 		<form data-abide action="" method="post">
 			<div class="row">
 				<div class="small-12 small-centered text-center columns">
-					<label>Désirez-vous vraiment supprimer l'annonce ?<br/><br/>
+					<label>Désirez-vous vraiment supprimer la proposition ?<br/><br/>
 						<input class="button alert" type="submit" name="submit_delete" value="Oui, supprimer l'annonce"/>
 					</label>
 				</div>
@@ -168,8 +168,8 @@ function formValideAnnonce($bdd,$identifiant,$matiere,$commentaire){
 		$valide = false;
 	}
 
-	// Pas plus de 3 demandes d'aide !
-	$reqfind = $bdd->prepare('SELECT count(id) as nbr_id from needhelp where numero_etudiant = :id');
+	// Pas plus de 3 propositions d'aide !
+	$reqfind = $bdd->prepare('SELECT count(id) as nbr_id from helper where numero_etudiant = :id');
 	$reqfind->execute(array(
 			'id' => $identifiant
 	)) or die(print_r($bdd->errorInfo(), true));
@@ -184,7 +184,7 @@ function formValideAnnonce($bdd,$identifiant,$matiere,$commentaire){
 		$valide = false;
 	}
 
-	// Pas plus d'1 demande d'aide par matiere !
+	// Pas plus d'1 proposition d'aide par matiere !
 	$reqfind = $bdd->prepare('SELECT count(id) as nbr_id from needhelp where numero_etudiant = :id and id_mat = :mat');
 	$reqfind->execute(array(
 			'id' => $identifiant,
@@ -221,7 +221,7 @@ if (isset($_POST['submit_newpost'])) {
 
 	if(formValideAnnonce($bdd,$identifiant,$matiere,$commentaire)){
 
-		$req = $bdd->prepare('INSERT INTO needhelp(numero_etudiant, id_mat, commentaire, date_publication)
+		$req = $bdd->prepare('INSERT INTO helper(numero_etudiant, id_mat, commentaire, date_publication)
 											VALUES(:identifiant, :matiere, :commentaire, :datep)');
 		$req->execute(array(
 				'identifiant' => $identifiant,

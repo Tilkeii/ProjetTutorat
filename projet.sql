@@ -213,10 +213,12 @@ INSERT INTO `groupe` (`id_grp`, `filiere`, `annee`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `helper` (
-  `numero_etudiant` int(8) NOT NULL DEFAULT '0',
-  `id_mat` int(4) NOT NULL DEFAULT '0',
-  `commentaire` varchar(300) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+`id` int(11) NOT NULL,
+  `numero_etudiant` int(11) NOT NULL,
+  `id_mat` int(11) NOT NULL,
+  `commentaire` varchar(300) DEFAULT NULL,
+  `date_publication` date NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
