@@ -1,11 +1,3 @@
-<?php
-$req = $bdd->prepare('SELECT id_priv FROM etudiant WHERE numero_etudiant = :id');
-$req->execute(array(
-    'id' => $_SESSION['login']));
-$res = $req->fetch();
-
-?>
-
 <div class="inner-wrap">
     <!-- debut banniere -->
     <!-- en-tete mobile -->
