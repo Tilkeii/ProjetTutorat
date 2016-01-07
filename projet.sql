@@ -171,14 +171,7 @@ CREATE TABLE IF NOT EXISTS `etudiant` (
   `id_grp` int(4) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Contenu de la table `etudiant`
---
 
-INSERT INTO `etudiant` (`numero_etudiant`, `mdp`, `nom`, `prenom`, `age`, `email`, `id_priv`, `id_grp`) VALUES
-(21301443, '6fe01f71b6e18bf858b061bfbaa89aaab88a9bbb', 'Ancestral', 'Pigeon', 21, 'eric92350@yahoo.fr', 1, 2),
-(21604782, 'e7e24b5362dc0be52c67659e13dc5f3c8f972662', 'a', 'a', 20, 'a', 2, 4),
-(22035514, 'e7e24b5362dc0be52c67659e13dc5f3c8f972662', 'dfd', 'qqqq', 89, 'ez', 2, 8);
 
 -- --------------------------------------------------------
 
@@ -402,6 +395,10 @@ MODIFY `id_mat` int(4) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=49;
 -- AUTO_INCREMENT pour la table `needhelp`
 --
 ALTER TABLE `needhelp`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
+--
+--AUTO_INCREMENT pour la table 'helper'
+ALTER TABLE `helper`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT pour la table `privileges`

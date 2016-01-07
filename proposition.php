@@ -39,7 +39,7 @@ $matieres = $req->fetchAll();
 
 	<div id="content">
 		<div class="row">
-			<div class="large-8 small-12 columns"><h3>Mes demandes d'aide</h3></div>
+			<div class="large-8 small-12 columns"><h3>Mes propositions d'aide</h3></div>
 			<div class="large-4 small-12 columns"><input type="submit" class="button small" style="width:100%"
 														 value="Poster une proposition d'aide" data-reveal-id="newpost-modal"/>
 			</div>
