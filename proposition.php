@@ -64,7 +64,6 @@ $matieres = $req->fetchAll();
 	<!-- Formulaire ajouter proposition -->
 	<div id="newpost-modal" class="reveal-modal small" data-reveal aria-labelledby="newpost" aria-hidden="true"
 		 role="dialog">
-		<!-- Page connexion here -->
 		<h3>Nouvelle annonce</h3>
 		<span id="error1" style="display: none; color: red;">Commentaire trop long.<br/></span>
 		<span id="error2" style="display: none; color: red;">La matière choisie est inconnue.</span>
@@ -106,7 +105,6 @@ $matieres = $req->fetchAll();
 	<!-- formulaire supprimer proposition -->
 	<div id="delete-modal" class="reveal-modal small" data-reveal aria-labelledby="delete" aria-hidden="true"
 		 role="dialog">
-		<!-- Page connexion here -->
 		<span id="error1" style="display: none; color: red;">Cette annonce n'existe pas.<br/></span>
 
 		<form data-abide action="" method="post">
@@ -185,7 +183,7 @@ function formValideAnnonce($bdd,$identifiant,$matiere,$commentaire){
 	}
 
 	// Pas plus d'1 proposition d'aide par matiere !
-	$reqfind = $bdd->prepare('SELECT count(id) as nbr_id from needhelp where numero_etudiant = :id and id_mat = :mat');
+	$reqfind = $bdd->prepare('SELECT count(id) as nbr_id from helper where numero_etudiant = :id and id_mat = :mat');
 	$reqfind->execute(array(
 			'id' => $identifiant,
 			'mat' => $matiere
@@ -236,7 +234,21 @@ if (isset($_POST['submit_newpost'])) {
 
 // Suppression annonce
 else if (isset($_POST['submit_delete'])) {
-	?><script>alert('pouf');</script><?php
+	echo $r["nom_mat"];
+	//on recupere l'id matiere par rapport au nom
+	$req1 = $bdd->prepare('SELECT id_mat from matiere where nom_mat = :nom');
+	$req1->execute(array(
+			'nom' => $r["nom_mat"]))or die(print_r($bdd->errorInfo(), true));
+	$res = $req1->fetch();
+
+	//on supprime la proposition
+	$req = $bdd->prepare('DELETE FROM helper where numero_etudiant = :id and id_mat= :mat');
+	$req->execute(array(
+		'id' => $_SESSION["login"],
+		'mat' => $res["id_mat"]
+	)) or die(print_r($bdd->errorInfo(), true));
+	?><script>window.location=window.location.href;swal("Good job!", "Suppression reussi !", "success");</script><?php
+
 }
 
 }

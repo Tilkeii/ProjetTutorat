@@ -236,7 +236,20 @@ if (isset($_POST['submit_newpost'])) {
 
 // Suppression annonce
 else if (isset($_POST['submit_delete'])) {
-	?><script>alert('pouf');</script><?php
+	echo $r["nom_mat"];
+	//on recupere l'id matiere par rapport au nom
+	$req1 = $bdd->prepare('SELECT id_mat from matiere where nom_mat = :nom');
+	$req1->execute(array(
+			'nom' => $r["nom_mat"]))or die(print_r($bdd->errorInfo(), true));
+	$res = $req1->fetch();
+
+	//on supprime la proposition
+	$req = $bdd->prepare('DELETE FROM needhelp where numero_etudiant = :id and id_mat= :mat');
+	$req->execute(array(
+		'id' => $_SESSION["login"],
+		'mat' => $res["id_mat"]
+	)) or die(print_r($bdd->errorInfo(), true));
+	?><script>window.location=window.location.href;swal("Good job!", "Suppression reussi !", "success");</script><?php
 }
 
 }
