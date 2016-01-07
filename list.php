@@ -42,7 +42,7 @@ $matieres = $req->fetchAll();
 		<div class="row">
 			<div class="large-8 small-12 columns"><h3>Dernières demandes d'aide</h3></div>
 			<div class="large-4 small-12 columns"><input type="submit" class="button small" style="width:100%"
-														 value="Poster une annonce" data-reveal-id="newpost-modal"/>
+														 value="Poster une demande" data-reveal-id="newpost-modal"/>
 			</div>
 		</div>
 		<table class="hover" style="width:100%">
@@ -108,7 +108,6 @@ $matieres = $req->fetchAll();
 	<!-- formulaire accepter annonce -->
 	<div id="reponse-modal" class="reveal-modal small" data-reveal aria-labelledby="reponse" aria-hidden="true"
 		 role="dialog">
-		<!-- Page connexion here -->
 		<h3>Répondre à une annonce</h3>
 		<span id="error1" style="display: none; color: red;">Commentaire trop long.<br/></span>
 

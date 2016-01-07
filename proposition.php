@@ -229,7 +229,7 @@ if (isset($_POST['submit_newpost'])) {
 				'commentaire' => $commentaire,
 				'datep' => date('Y-m-d')
 		)) or die(print_r($bdd->errorInfo(), true));
-		?><script>swal("Good job!", "Ajout reussi !", "success");window.location=window.location.href;</script><?php
+		?><script>window.location=window.location.href;swal("Good job!", "Ajout reussi !", "success");</script><?php
 			
 	}
 }

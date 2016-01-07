@@ -41,7 +41,7 @@ $matieres = $req->fetchAll();
 		<div class="row">
 			<div class="large-8 small-12 columns"><h3>Mes demandes d'aide</h3></div>
 			<div class="large-4 small-12 columns"><input type="submit" class="button small" style="width:100%"
-														 value="Poster une annonce" data-reveal-id="newpost-modal"/>
+														 value="Poster une demande" data-reveal-id="newpost-modal"/>
 			</div>
 		</div>
 		<table class="hover">
@@ -229,7 +229,7 @@ if (isset($_POST['submit_newpost'])) {
 				'commentaire' => $commentaire,
 				'datep' => date('Y-m-d')
 		)) or die(print_r($bdd->errorInfo(), true));
-		?><script>swal("Good job!", "Ajout reussi !", "success");window.location=window.location.href;</script><?php
+		?><script>window.location=window.location.href;swal("Good job!", "Ajout reussi !", "success");</script><?php
 			
 	}
 }
