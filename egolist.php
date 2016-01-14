@@ -1,22 +1,17 @@
 ﻿<!DOCTYPE html>
 <?php
 session_start();
-try {
-    $bdd = new PDO('mysql:host=sql.e-tutorat.tk;dbname=w4130d_tutorat;charset=utf8', 'w4130d_tutorat', '159753Tu');
-} catch (PDOException $e) {
-    print "Erreur !: " . $e->getMessage() . "<br/>";
-    die();
-}
 if(isset($_SESSION['login']) and isset($_SESSION['pass']))
 {
 
 // recuperation des annonces
+$bdd = new PDO('mysql:host=89.234.180.28;dbname=w4130d_tutorat;charset=utf8', 'w4130d_tutorat', '159753Tu');
 
-$req = $bdd->prepare('SELECT nom_mat,commentaire,date_publication
+$req = $bdd->prepare('SELECT id,nom_mat,commentaire,date_publication,etat
 							from needhelp
 							left join matiere on needhelp.id_mat = matiere.id_mat
 							where numero_etudiant = :id
-							order by date_publication desc');
+							order by etat desc');
 $req->execute(array(
 				'id' => $_SESSION['login'])
 ) or die(print_r($bdd->errorInfo(), true));
@@ -33,18 +28,19 @@ $matieres = $req->fetchAll();
 <?php include('includes/head.php'); ?>
 <!-- body -->
 <body>
+<title>Mes demandes d'aide</title>
 <div class="off-canvas-wrap" data-offcanvas>
 
 	<?php include 'includes/menu.php' ?>
 
-	<div id="content">
+	<div class="content medium-12 large-8">
 		<div class="row">
 			<div class="large-8 small-12 columns"><h3>Mes demandes d'aide</h3></div>
 			<div class="large-4 small-12 columns"><input type="submit" class="button small" style="width:100%"
-														 value="Poster une demande" data-reveal-id="newpost-modal"/>
+														 value="Poster une annonce" data-reveal-id="newpost-modal"/>
 			</div>
 		</div>
-		<table class="hover">
+		<table>
 			<thead>
 			<tr>
 				<th>Matière</th>
@@ -57,7 +53,9 @@ $matieres = $req->fetchAll();
 				echo "<tr><td>" . $r["nom_mat"] . "</td>" .
 						"<td>" . $r["commentaire"] . "</td>" .
 						"<td style=\"text-align:right\">" . date("d/m/Y", strtotime($r["date_publication"])) . "</td>" .
-						"<td style=\"text-align:center\"><input class=\"button warning tiny\" type=\"submit\" value=\"Supprimer\" data-reveal-id=\"delete-modal\"/></td></tr>";
+						($r["etat"] == 1 ?
+								"<td style=\"text-align:center\"><input class=\"button success tiny\" type=\"submit\" value=\"Répondre\" onclick=\"accept_post(".$r["id"].")\"/></td></tr>":
+								"<td style=\"text-align:center\"><input class=\"button warning tiny\" type=\"submit\" value=\"Supprimer\" onclick=\"delete_post(".$r["id"].")\"/></td></tr>");
 			?>
 	</div>
 
@@ -141,6 +139,57 @@ $matieres = $req->fetchAll();
 							$('.chars_info').text(charleft + ' caractères restant').css('color', 'red');
 					});
 		});
+		function accept_post(idannonce){
+			swal({
+						title: "Attention !",
+						text: "En acceptant l'aide proposée, vos adresses mail seront échangées et votre annonce supprimée. Continuer ?",
+						type: "warning",
+						showCancelButton: true,
+						cancelButtonColor: "#FF0000",
+						cancelButtonText: "Refuser l'aide",
+						confirmButtonText: "Accepter l'aide",
+						closeOnConfirm: false,
+						closeOnCancel: false,
+						showLoaderOnConfirm: true,
+						showLoaderOnCancel: true
+					},
+					function(isConfirm){
+						if(isConfirm){
+							$.post("Query/accepteaide.php",{idannonce:idannonce},function(data){
+								swal({title : "Good job!", text : "Aide acceptee !", type : "success"}, function () {
+									window.location.href = "list.php";
+								});
+							});
+						} else {
+							toggleLoading();
+							$.post("Query/refuseaide.php",{idannonce:idannonce},function(data){
+								toggleLoading();
+								swal({title : "Succes", text : "Aide refusee", type : "error"}, function () {
+									window.location.href = "egolist.php";
+								});
+							});
+						}
+					});
+		}
+		function delete_post(idannonce){
+			swal({
+						title: "Attention !",
+						text: "Etes-vous sur de vouloir supprimer cette annonce ?",
+						type: "warning",
+						cancelButtonText: "Annuler",
+						showCancelButton: true,
+						closeOnConfirm: false,
+						showLoaderOnConfirm: true
+					},
+					function(){
+						$.post("Query/supprimeannonce.php",{idannonce:idannonce},function(data){
+							//alert(data);
+							swal({title : "Good job!", text : "Suppression terminée !", type : "success"}, function () {
+								window.location.href = "egolist.php";
+							});
+						});
+					});
+		}
 	</script>
 </body>
 
@@ -229,27 +278,13 @@ if (isset($_POST['submit_newpost'])) {
 				'commentaire' => $commentaire,
 				'datep' => date('Y-m-d')
 		)) or die(print_r($bdd->errorInfo(), true));
-		?><script>window.location=window.location.href;swal("Good job!", "Ajout reussi !", "success");</script><?php
-			
+		?><script>swal("Good job!", "Ajout reussi !", "success");</script><?php
 	}
 }
 
 // Suppression annonce
 else if (isset($_POST['submit_delete'])) {
-	echo $r["nom_mat"];
-	//on recupere l'id matiere par rapport au nom
-	$req1 = $bdd->prepare('SELECT id_mat from matiere where nom_mat = :nom');
-	$req1->execute(array(
-			'nom' => $r["nom_mat"]))or die(print_r($bdd->errorInfo(), true));
-	$res = $req1->fetch();
-
-	//on supprime la proposition
-	$req = $bdd->prepare('DELETE FROM needhelp where numero_etudiant = :id and id_mat= :mat');
-	$req->execute(array(
-		'id' => $_SESSION["login"],
-		'mat' => $res["id_mat"]
-	)) or die(print_r($bdd->errorInfo(), true));
-	?><script>window.location=window.location.href;swal("Good job!", "Suppression reussi !", "success");</script><?php
+	?><script>alert('pouf');</script><?php
 }
 
 }

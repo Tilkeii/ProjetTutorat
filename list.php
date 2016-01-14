@@ -1,21 +1,17 @@
 ﻿<!DOCTYPE html>
 <?php
 session_start();
-try {
-    $bdd = new PDO('mysql:host=sql.e-tutorat.tk;dbname=w4130d_tutorat;charset=utf8', 'w4130d_tutorat', '159753Tu');
-} catch (PDOException $e) {
-    print "Erreur !: " . $e->getMessage() . "<br/>";
-    die();
-}
 if(isset($_SESSION['login']) and isset($_SESSION['pass']))
 {
 
 // recuperation des annonces
+$bdd = new PDO('mysql:host=89.234.180.28;dbname=w4130d_tutorat;charset=utf8', 'w4130d_tutorat', '159753Tu');
 
-$req = $bdd->prepare('SELECT nom_mat,commentaire,date_publication
+$req = $bdd->prepare('SELECT id,nom_mat,commentaire,date_publication
 							from needhelp
 							left join matiere on needhelp.id_mat = matiere.id_mat
 							where numero_etudiant <> :id
+							and etat = 0
 							order by date_publication desc');
 $req->execute(array(
 				'id' => $_SESSION['login'])
@@ -27,22 +23,21 @@ $req = $bdd->prepare('select * from matiere');
 $req->execute() or die(print_r($bdd->errorInfo(), true));
 $matieres = $req->fetchAll();
 
-
 ?>
 <html>
 <!-- head -->
 <?php include('includes/head.php'); ?>
 <!-- body -->
 <body>
+<title>Dernières demandes d'aide</title>
 <div class="off-canvas-wrap" data-offcanvas>
 
 	<?php include 'includes/menu.php' ?>
-
-	<div id="content">
+	<div class="content medium-12 large-8">
 		<div class="row">
 			<div class="large-8 small-12 columns"><h3>Dernières demandes d'aide</h3></div>
 			<div class="large-4 small-12 columns"><input type="submit" class="button small" style="width:100%"
-														 value="Poster une demande" data-reveal-id="newpost-modal"/>
+														 value="Poster une annonce" data-reveal-id="newpost-modal"/>
 			</div>
 		</div>
 		<table class="hover" style="width:100%">
@@ -58,7 +53,8 @@ $matieres = $req->fetchAll();
 				echo "<tr><td>" . $r["nom_mat"] . "</td>" .
 						"<td>" . $r["commentaire"] . "</td>" .
 						"<td style=\"text-align:right\">" . date("d/m/Y", strtotime($r["date_publication"])) . "</td>" .
-						"<td style=\"text-align:center\"><input class=\"button secondary tiny\" type=\"submit\" value=\"Proposer son aide\" data-reveal-id=\"reponse-modal\"/></td></tr>";
+						"<td style=\"text-align:center\"><input class=\"button secondary tiny\" type=\"submit\"
+						value=\"Proposer son aide\" onclick=\"help_offer(".$r["id"].")\"/></td></tr>";
 			?>
 		</table>
 	</div>
@@ -105,68 +101,49 @@ $matieres = $req->fetchAll();
 		<a class="close-reveal-modal" aria-label="Close">&#215;</a>
 	</div>
 
-	<!-- formulaire accepter annonce -->
-	<div id="reponse-modal" class="reveal-modal small" data-reveal aria-labelledby="reponse" aria-hidden="true"
-		 role="dialog">
-		<h3>Répondre à une annonce</h3>
-		<span id="error1" style="display: none; color: red;">Commentaire trop long.<br/></span>
-
-		<form data-abide action="" method="post">
-			<div class="row">
-				<div class="small-12 columns">
-					<label> Commentaire
-						<small class="chars_info_reponse"></small>
-						<textarea class="commentaire_reponse" name="commentaire_reponse" rows="3" maxlength="160"
-								  placeholder="Courte réponse (infos contact, disponibilités, etc.)" required></textarea>
-					</label>
-				</div>
-			</div>
-			<div class="row">
-				<div class="small-12 small-centered text-center columns">
-					<label>Êtes-vous sûr de vouloir répondre à cette demande d'aide ?
-						<input class="button small success" type="submit" name="submit_reponse" value="Oui, je confirme"/>
-					</label>
-				</div>
-			</div>
-		</form>
-		<a class="close-reveal-modal" aria-label="Close">&#215;</a>
-	</div>
-
-
-
 	<?php include('includes/footer_scripts.php'); ?>
 	<script>
 		$(document).foundation();
 		$(document).ready(function () {
 			$('.commentaire').change(function () {
-						var charleft = 160 - $('.commentaire').val().length;
-						if (charleft > 20)
-							$('.chars_info').text(charleft + ' caractères restant').css('color', 'green');
-						else
-							$('.chars_info').text(charleft + ' caractères restant').css('color', 'red');
-					})
-					.keyup(function () {
-						var charleft = 160 - $('.commentaire').val().length;
-						if (charleft > 20)
-							$('.chars_info').text(charleft + ' caractères restant').css('color', 'green');
-						else
-							$('.chars_info').text(charleft + ' caractères restant').css('color', 'red');
-					});
-			$('.commentaire_reponse').change(function () {
-						var charleft = 160 - $('.commentaire_reponse').val().length;
-						if (charleft > 20)
-							$('.chars_info_reponse').text(charleft + ' caractères restant').css('color', 'green');
-						else
-							$('.chars_info_reponse').text(charleft + ' caractères restant').css('color', 'red');
-					})
-					.keyup(function () {
-						var charleft = 160 - $('.commentaire_reponse').val().length;
-						if (charleft > 20)
-							$('.chars_info_reponse').text(charleft + ' caractères restant').css('color', 'green');
-						else
-							$('.chars_info_reponse').text(charleft + ' caractères restant').css('color', 'red');
-					});
+				var charleft = 160 - $('.commentaire').val().length;
+				if (charleft > 20)
+					$('.chars_info').text(charleft + ' caractères restant').css('color', 'green');
+				else
+					$('.chars_info').text(charleft + ' caractères restant').css('color', 'red');
+			})
+			.keyup(function () {
+				var charleft = 160 - $('.commentaire').val().length;
+				if (charleft > 20)
+					$('.chars_info').text(charleft + ' caractères restant').css('color', 'green');
+				else
+					$('.chars_info').text(charleft + ' caractères restant').css('color', 'red');
+			});
 		});
+		function help_offer(idannonce){
+			swal({
+				title: "Attention !",
+				text: "Etes-vous sur de vouloir offrir votre aide pour cette annonce ?",
+				type: "warning",
+				cancelButtonText: "Annuler",
+				showCancelButton: true,
+				closeOnConfirm: false,
+				showLoaderOnConfirm: true
+			},
+			function(){
+				//on ajoute aussi la proposition d'aide au profil du proposeur				
+				
+
+				//on ajoute dans la table aide l'aide créer
+				$.post("Query/proposeaide.php",{idannonce:idannonce},function(data){
+				
+				//alert(data);
+				swal({title : "Good job!", text : "Proposition d'aide envoyee !", type : "success"}, function () {
+					window.location.href = "myhelp.php";
+					});
+				});
+			});
+		}
 	</script>
 </body>
 
@@ -255,13 +232,10 @@ if (isset($_POST['submit_newpost'])) {
 				'commentaire' => $commentaire,
 				'datep' => date('Y-m-d')
 		)) or die(print_r($bdd->errorInfo(), true));
-		?><script>swal("Good job!", "Ajout reussi !", "success");</script><?php
+		?><script>swal({title : "Good job!", text : "Ajout réussi !", type : "success"}, function () {
+				window.location.href = "egolist.php";
+			});</script><?php
 	}
-}
-
-// Reponse post
-else if (isset($_POST['submit_reponse'])) {
-	?><script>alert('pouf');</script><?php
 }
 
 }

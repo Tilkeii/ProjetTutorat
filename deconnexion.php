@@ -1,6 +1,6 @@
 <?php
 	session_start();
 	session_destroy();
-	session_unset($_SESSION['login']);
+	$_SESSION = array();
 	header('Location:index.php?rep=1');
 ?>

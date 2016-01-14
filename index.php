@@ -2,7 +2,7 @@
 ob_start(); //Permet de mettre le header n'importe ou dans le code : sinon doit se placer avant le code html
 session_start();
 try {
-    $bdd = new PDO('mysql:host=sql.e-tutorat.tk;dbname=w4130d_tutorat;charset=utf8', 'w4130d_tutorat', '159753Tu');
+    $bdd = new PDO('mysql:host=89.234.180.28;dbname=w4130d_tutorat;charset=utf8', 'w4130d_tutorat', '159753Tu');
 } catch (PDOException $e) {
     print "Erreur !: " . $e->getMessage() . "<br/>";
     die();
@@ -16,6 +16,7 @@ try {
 
 <!-- body -->
 <body>
+<title>e-tutorat - Accueil</title>
 <?php
     if(isset($_SESSION['login']) and isset($_SESSION['pass']))
         include("includes/menu.php");
@@ -141,7 +142,7 @@ try {
                     </div>
                     <div class="row">
                         <div class="small-12 small-centered text-center columns">
-                            <input style="margin-top: 15px; margin-bottom: 0px;" class="button small secondary" type="submit" name="submit_inscription" value="Valider" />
+                            <input class="button small secondary" type="submit" name="submit_inscription" value="Valider" />
                         </div>
                     </div>
                 </form>
@@ -183,14 +184,15 @@ try {
             <?php };?>
             <!-- fin banniere -->
 
-            <div id="content">
+            <div class="content medium-12 large-8">
                 <h1>Bienvenue sur le projet tutorat</h1>
-                <p>Si vous êtes étudiant à l'IUT de Vélizy, alors ce site est fait pour vous.<br />
+                <p>Si vous êtes étudiant à l'IUT de Vélizy, alors ce site est fait pour vous.
                     Avec ce site et une fois inscrit, vous pourrez demander de l'aide aux autres étudiants
                     inscrits dans des matières où vous avez des difficultés.<br /> A l'inverse vous pouvez aussi
                     proposer de l'aide dans des matières où vous avez de bonnes capacités.<br />
                     Bonne navigation sur notre site !<br /><br />
-                    NOTE: En vous inscrivant ou connectant sur ce site, vous acceptez aussi de ne pas poster/écrire de contenus
+                    NOTE: En vous inscrivant ou connectant sur ce site, vous acceptez l'utilisation de cookies
+                    afin d'améliorer votre navigation. Vous accepter aussi de ne pas poster/écrire de contenus
                     inappropriés : dans le cas contraire, votre compte sera définitevement supprimé sans préavis
                     par nos administrateurs.
 
@@ -238,14 +240,12 @@ if (isset($_POST['submit_inscription'])) {
     if(formValideInscription($bdd,$identifiant,$email,$nom,$prenom,$pass,$pass_verif))
     {
 		
-		//Requete pour recuperer le groupe par rapport a la formation et a l'annee	
+		
 		$reqfind = $bdd->prepare('SELECT id_grp from groupe where filiere = :departement AND annee = :annee');
         $reqfind->execute(array(
             'departement' => $departement,
             'annee' => $annee));
         $resultatfind = $reqfind->fetch();
-
-
 
         $req = $bdd->prepare('INSERT INTO etudiant(numero_etudiant, mdp, nom, prenom, email,id_grp) VALUES(:identifiant, :pass, :nom, :prenom, :email, :id_grp)');
         $req->execute(array(
@@ -258,7 +258,6 @@ if (isset($_POST['submit_inscription'])) {
 			
         ));
         ?><script>swal("Good job!", "Inscription validee!", "success");</script><?php
-        echo htmlspecialchars($_POST['nom']);
     } // pas besoin de else : deja geré dans la fonction
 }
 

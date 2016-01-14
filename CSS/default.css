@@ -48,28 +48,8 @@ body {
 	color:#FFF;
 }
 
-#menu_accueil:hover{
-	background: #581047;
-	transition: background .5s;
-}
-
-#menu_inscription:hover{
-	background: #0e20ab;
-	transition: background .5s;
-}
-
-#menu_connexion:hover{
-	background: #8a0eab;
-	transition: background .5s;
-}
-
-#menu_modification:hover{
-	background: #80F880;
-	transition: background .5s;
-}
-
-#menu_deconnexion:hover{
-	background: #970000;
+.navbar_menu_item:hover{
+	background: #565656;
 	transition: background .5s;
 }
 
@@ -86,8 +66,7 @@ body {
 
 /* contenu */
 
-#content {
-	width:60%;
+.content {
 	margin-left:auto;
 	margin-right:auto;
 	text-align:justify;
@@ -103,11 +82,40 @@ textarea::-webkit-input-placeholder{
 	font-style: italic;
 }
 
+/* tables */
+table {
+	width:100%;
+}
+
 /* navbar */
 
 .fixed{
 	position:fixed;
 	top:0px;
+}
+
+/* loading box */
+div#loading_box{
+	position: fixed;
+	top: 0;
+	left: 0;
+	background-color: rgba(0, 0, 0, 0.5);
+	width: 100%;
+	height: 100%;
+	z-index: 100000;
+}
+
+div#loading_box div{
+	width: 150px;
+	height: 50px;
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	margin: -25px 0 0 -25px;
+	padding-top: -50px;
+	z-index: 100001;
+	background:transparent url(../Pictures/ajax-loader.gif) no-repeat center center;
+	color: #fff;
 }
 
 /* flo */

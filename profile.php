@@ -2,7 +2,7 @@
 <?php
 session_start();
 try {
-	$bdd = new PDO('mysql:host=sql.e-tutorat.tk;dbname=w4130d_tutorat;charset=utf8', 'w4130d_tutorat', '159753Tu');
+	$bdd = new PDO('mysql:host=89.234.180.28;dbname=w4130d_tutorat;charset=utf8', 'w4130d_tutorat', '159753Tu');
 } catch (PDOException $e) {
 	print "Erreur !: " . $e->getMessage() . "<br/>";
 	die();
@@ -21,11 +21,12 @@ if(isset($_SESSION['login']) and isset($_SESSION['pass']))
 
     <!-- body -->
     <body>
+    <title>Mon profil</title>
     <div class="off-canvas-wrap" data-offcanvas>
 
         <?php include 'includes/menu.php' ?>
 
-        <div id="content">
+        <div class="content medium-12 large-8">
             <h3> Modifier le profil</h3>
             <p>Certaines modifications doivent faire l'objet d'une demande auprès de l'administrateur.</p>
             <span id="error1" style="display: none; color: red;">L'identifiant existe deja<br /></span>
@@ -232,8 +233,9 @@ if(isset($_SESSION['login']) and isset($_SESSION['pass']))
             ))  or die(print_r($req->errorInfo(), true));
             ?>
             <script>
-                swal("Good job!", "Modifications validees!", "success");
-               // window.location = window.location.href;
+                swal({title : "Good job!", text : "Modifications terminées !", type : "success"}, function () {
+                    window.location.href = "profile.php";
+                });
             </script>
             <?php
         } // pas besoin de else : deja geré dans la fonction
