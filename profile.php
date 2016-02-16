@@ -220,8 +220,8 @@ if(isset($_SESSION['login']) and isset($_SESSION['pass']))
     if (isset($_POST['submit_modification'])) {
         $identifiant = htmlspecialchars($_SESSION['login']);
         isset($_POST['email']) && !empty($_POST["email"]) ? $email = htmlspecialchars($_POST['email']) : $email = $resultat["email"];
-        isset($_POST['pass']) && !empty($_POST["pass"]) ? $pass = sha1($_POST['pass']) : $pass = false;
-        isset($_POST['pass_verif']) && !empty($_POST["pass_verif"]) ? $pass_verif = sha1($_POST['pass_verif']) : $pass_verif = false;
+        isset($_POST['pass']) && !empty($_POST["pass"]) ? $pass = sha1($_POST['pass']) : $pass = /*false*/$resultat['mdp'];
+        isset($_POST['pass_verif']) && !empty($_POST["pass_verif"]) ? $pass_verif = sha1($_POST['pass_verif']) : $pass_verif = $resultat['mdp']/*false*/;
 
         if(formValideModification($bdd,$email,$pass,$pass_verif))
         {
