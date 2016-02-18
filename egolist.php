@@ -179,7 +179,7 @@ $matieres = $req->fetchAll();
 						cancelButtonText: "Annuler",
 						showCancelButton: true,
 						closeOnConfirm: false,
-						showLoaderOnConfirm: true
+					    showLoaderOnConfirm: true
 					},
 					function(){
 						$.post("Query/supprimeannonce.php",{idannonce:idannonce},function(data){

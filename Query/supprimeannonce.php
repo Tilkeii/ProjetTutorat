@@ -14,8 +14,6 @@ if(isset($_POST["idannonce"])){
                            ');
     $req->execute(array('idannonce' => $_POST["idannonce"])) or die(print_r('3'.$bdd->errorInfo(), true));
 
-    echo "ok";
 }
-else{
-    echo "not ok lol";
-}
+
+?>

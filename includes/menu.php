@@ -26,7 +26,7 @@
                 <li id="menu_liste_posts" class="navbar_menu_item"><a href="list.php" >Dernières demandes</a></li>
                 <li id="menu_liste_egolist" class="navbar_menu_item"><a href="egolist.php" >Mes demandes</a></li>
                 <li id="menu_liste_myhelp" class="navbar_menu_item"><a href="myhelp.php" >Mes reponses</a></li>
-                <li id="menu_liste_myoffers" class="navbar_menu_item"><a href="myoffers.php" >Mes offres</a></li>
+                <!--<li id="menu_liste_myoffers" class="navbar_menu_item"><a href="myoffers.php" >Mes offres</a></li>-->
                 <li id="menu_modification" class="navbar_menu_item"><a href="profile.php" >Mon profil</a></li>
                 <?php
                     $bdd = new PDO('mysql:host=89.234.180.28;dbname=w4130d_tutorat;charset=utf8', 'w4130d_tutorat', '159753Tu');

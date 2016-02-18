@@ -141,7 +141,7 @@ try {
                         </div>
                     </div>
                     <div class="row">
-                        <div class="small-12 small-centered text-center columns">
+                        <div class="small-12 small-centered text-center columns" style="margin-top: 15px;">
                             <input class="button small secondary" type="submit" name="submit_inscription" value="Valider" />
                         </div>
                     </div>
@@ -264,7 +264,7 @@ if (isset($_POST['submit_inscription'])) {
 // Connexion
 
 if(isset($_POST['submit_connexion'])) {
-    echo "Connexion submit";
+    //echo "Connexion submit";
     //données du formulaire dans variables
     $passconnexion = sha1($_POST['passconnexion']);
     $id = htmlspecialchars($_POST['id']);
