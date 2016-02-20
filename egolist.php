@@ -183,7 +183,6 @@ $matieres = $req->fetchAll();
 					},
 					function(){
 						$.post("Query/supprimeannonce.php",{idannonce:idannonce},function(data){
-							//alert(data);
 							swal({title : "Good job!", text : "Suppression terminée !", type : "success"}, function () {
 								window.location.href = "egolist.php";
 							});
