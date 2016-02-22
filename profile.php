@@ -111,7 +111,15 @@ if(isset($_SESSION['login']) and isset($_SESSION['pass']))
                 </div>
             </form>
         </div>
-
+        <div class="content medium-12 large-6">
+            <h4> Envoyer un Mail aux administrateurs</h4>
+            <form action="mailAdmin.php" method="GET">
+                <p>
+                    <textarea name="contenuMail" id="contenuMail" rows=10"></textarea>
+                    <input type="submit" value="Envoyer Mail" name="boutonMail" id="boutonMail" />
+                </p>
+            </form>
+        </div>
         <a class="exit-off-canvas"></a>
         <?php include('includes/footer_scripts.php'); ?>
 
@@ -144,7 +152,6 @@ if(isset($_SESSION['login']) and isset($_SESSION['pass']))
     </body>
     </html>
     <?php
-
     function formValideModification($bdd,$email,$pass,$pass_verif){
         $valide = true;
 

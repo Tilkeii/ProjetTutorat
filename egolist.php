@@ -277,7 +277,12 @@ if (isset($_POST['submit_newpost'])) {
 				'commentaire' => $commentaire,
 				'datep' => date('Y-m-d')
 		)) or die(print_r($bdd->errorInfo(), true));
-		?><script>swal("Good job!", "Ajout reussi !", "success");</script><?php
+		?>
+        <script>swal({title : "Good job!", text : "Ajout reussi !", type : "success"}, function () {
+            window.location.href = "egolist.php"
+            });
+        </script>
+        <?php
 	}
 }
 

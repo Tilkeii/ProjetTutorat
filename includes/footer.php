@@ -12,5 +12,7 @@
     <div id="logo_partenaire">
         <img style="width:150px;height:25px;" src="Pictures/pulseheberg.png" />
     </div>
+    <br/>
+    Contact administrateur : admin@e-tutorat.tk
 </div>
 <!-- fin footer -->

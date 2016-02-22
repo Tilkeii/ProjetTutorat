@@ -197,6 +197,13 @@ try {
                     par nos administrateurs.
 
                 </p>
+                <p>
+                    <FONT color="red"> INFO IMPORTANTE: Nous sommes en train de changer les fonctions de cryptage des mots de passe: nous allons
+                    donc pour cela devoir sans doute devoir renouveller la base de données afin de l'adapter
+                    à ces nouvelles fonctions et donc les données stockées avant le changement seront détruites.
+                    Si vous n'arrivez pas à vous connecter au site, c'est que la base à été changer: re-créer alors votre compte.<br/>
+                    Veuillez-nous excuser de la gêne occasionnée.</Font>
+                </p>
             </div>
 
             <?php include 'includes/footer.php' ?>
