@@ -114,6 +114,39 @@ if(isset($_SESSION['login']) and isset($_SESSION['pass'])) {
 					});
 
             }
+
+            function rendre_user(iduser){
+                    swal({
+						title: "Attention !",
+						text: "Voulez vous vraiment enlever les privilèges de cet utilisateur ?",
+						type: "warning",
+						cancelButtonText: "Annuler",
+						showCancelButton: true,
+						cancelButtonColor: "#FF0000",
+						cancelButtonText: "Annuler",
+						confirmButtonText: "Confirmer",
+						closeOnConfirm: false,
+						closeOnCancel: false,
+						showLoaderOnConfirm: true,
+						showLoaderOnCancel: true
+					},
+					function(isConfirm){
+                        if(isConfirm){
+						        $.post("Query/changementDroits.php",{iduser:iduser},function(data){
+							        swal({title : "Good job!", text : "Droits enlevés !", type : "success"}, function () {
+								    window.location.href = "admin.php";
+							    });
+						    });
+                        }
+                        else {
+                            swal({title : "Annulation", text : "Droits non enlevés", type : "error"}, function () {
+							    window.location.href = "admin.php";
+						    });
+
+                        }
+					});
+
+            }
 		</script>
     </body>
 
