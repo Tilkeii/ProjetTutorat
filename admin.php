@@ -52,6 +52,9 @@ if(isset($_SESSION['login']) and isset($_SESSION['pass'])) {
                                 echo "<td style=\"text-align:center\"><input class=\"button success tiny\" type=\"submit\" value=\"Rendre Admin\" onclick=\"rendre_admin(".$r["numero_etudiant"].")\"/></td>";
                                 
                         }
+                        else{
+                            echo "<td style=\"text-align:center\"><input class=\"button success tiny\" type=\"submit\" value=\"Rendre User\" onclick=\"rendre_user(".$r["numero_etudiant"].")\"/></td>";
+                        }
                         echo "</tr>";
                     }
 		    		?>
@@ -82,19 +85,32 @@ if(isset($_SESSION['login']) and isset($_SESSION['pass'])) {
             function rendre_admin(iduser){
                     swal({
 						title: "Attention !",
-						text: "Êtes vous sûr de vouloir supprimer l'étudiant de la base ainsi que toutes ses offres/demandes en cours ?",
+						text: "Voulez vous vraiment donner les privilèges à cet utilisateur ?",
 						type: "warning",
 						cancelButtonText: "Annuler",
 						showCancelButton: true,
+						cancelButtonColor: "#FF0000",
+						cancelButtonText: "Annuler",
+						confirmButtonText: "Confirmer",
 						closeOnConfirm: false,
-						showLoaderOnConfirm: true
+						closeOnCancel: false,
+						showLoaderOnConfirm: true,
+						showLoaderOnCancel: true
 					},
-					function(){
-						$.post("Query/supprimeetudiant.php",{iduser:iduser},function(data){
-							swal({title : "Good job!", text : "Suppression terminée !", type : "success"}, function () {
-								window.location.href = "admin.php";
-							});
-						});
+					function(isConfirm){
+                        if(isConfirm){
+						        $.post("Query/changementDroits.php",{iduser:iduser},function(data){
+							        swal({title : "Good job!", text : "Droits donnés !", type : "success"}, function () {
+								    window.location.href = "admin.php";
+							    });
+						    });
+                        }
+                        else {
+                            swal({title : "Annulation", text : "Droits non donnés", type : "error"}, function () {
+							    window.location.href = "admin.php";
+						    });
+
+                        }
 					});
 
             }
