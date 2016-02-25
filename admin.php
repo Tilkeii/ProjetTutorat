@@ -37,17 +37,23 @@ if(isset($_SESSION['login']) and isset($_SESSION['pass'])) {
 		        		<th>Numéro étudiant</th>
 		        		<th>Prénom</th>
 		        		<th>Nom</th>
-						<th>Actions</th>
+						<th width="25%" colspan="2" >Actions</th>
 		    		</tr>
 		    		</thead>
 		    		<!--récupération des étudiants et insertion dans tableau-->
 		    		<?php
-		    		foreach($etudiants as $r)
+		    		foreach($etudiants as $r){
 		        		echo"<tr><td>" . $r["numero_etudiant"] . "</td>" .
 						"<td>" . $r["prenom"] . "</td>" .
 						"<td>" . $r["nom"] . "</td>" .
 						"<td style=\"text-align:center\"><input class=\"button warning tiny\" type=\"submit\"
-						value=\"Supprimer\" onclick=\"delete_user(".$r["numero_etudiant"].")\"/></td></tr>";
+						value=\"Supprimer\" onclick=\"delete_user(".$r["numero_etudiant"].")\"/></td>";
+                        if($r["id_priv"]==1){
+                                echo "<td style=\"text-align:center\"><input class=\"button success tiny\" type=\"submit\" value=\"Rendre Admin\" onclick=\"rendre_admin(".$r["numero_etudiant"].")\"/></td>";
+                                
+                        }
+                        echo "</tr>";
+                    }
 		    		?>
 				</table>	
 			</div> 	
@@ -71,8 +77,27 @@ if(isset($_SESSION['login']) and isset($_SESSION['pass'])) {
 								window.location.href = "admin.php";
 							});
 						});
-					});	
+					});
 			}
+            function rendre_admin(iduser){
+                    swal({
+						title: "Attention !",
+						text: "Êtes vous sûr de vouloir supprimer l'étudiant de la base ainsi que toutes ses offres/demandes en cours ?",
+						type: "warning",
+						cancelButtonText: "Annuler",
+						showCancelButton: true,
+						closeOnConfirm: false,
+						showLoaderOnConfirm: true
+					},
+					function(){
+						$.post("Query/supprimeetudiant.php",{iduser:iduser},function(data){
+							swal({title : "Good job!", text : "Suppression terminée !", type : "success"}, function () {
+								window.location.href = "admin.php";
+							});
+						});
+					});
+
+            }
 		</script>
     </body>
 
