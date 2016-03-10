@@ -120,7 +120,6 @@ $resultat = $req->fetchAll();
 			toggleLoading();
 			$.post("Query/proposeaide.php",{idannonce:idannonce},function(data){
 				toggleLoading();
-				// gestion erreur a faire
 				swal({title : "Good job!", text : "Proposition d'aide envoyee !", type : "success"}, function () {
 					window.location.href = "profile.php";
 				});

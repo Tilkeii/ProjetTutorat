@@ -31,6 +31,10 @@ if(isset($_SESSION['login']) and isset($_SESSION['pass'])) {
             	<div class="row">
 		    		<div class="large-8 small-12 columns"><h3>Liste des Etudiants</h3></div>
 				</div>
+                <div class="row">
+                    <div class="large-4 small-12 columns"><input type="submit" class="button small" style="width:100%" value="Changer d'année"
+                    data-reveal-id="newpost-modal"/> <div> Année actuelle: 2015/2016 </div>
+                </div>
 				<table>
 		    		<thead>
 		    		<tr>
@@ -107,7 +111,6 @@ if(isset($_SESSION['login']) and isset($_SESSION['pass'])) {
                         }
                         else {
                             swal({title : "Annulation", text : "Droits non donnés", type : "error"}, function () {
-							    window.location.href = "admin.php";
 						    });
 
                         }
@@ -140,7 +143,6 @@ if(isset($_SESSION['login']) and isset($_SESSION['pass'])) {
                         }
                         else {
                             swal({title : "Annulation", text : "Droits non enlevés", type : "error"}, function () {
-							    window.location.href = "admin.php";
 						    });
 
                         }
@@ -156,6 +158,4 @@ if(isset($_SESSION['login']) and isset($_SESSION['pass'])) {
     } else {
         header('Location: index.php');
     }
-} else {
-    header('Location: index.php');
 }?>

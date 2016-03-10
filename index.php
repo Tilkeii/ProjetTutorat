@@ -1,6 +1,8 @@
 <?php
 ob_start(); //Permet de mettre le header n'importe ou dans le code : sinon doit se placer avant le code html
 session_start();
+
+//connexion a la BD
 try {
     $bdd = new PDO('mysql:host=89.234.180.28;dbname=w4130d_tutorat;charset=utf8', 'w4130d_tutorat', '159753Tu');
 } catch (PDOException $e) {
@@ -149,9 +151,8 @@ try {
                 <a class="close-reveal-modal" aria-label="Close">&#215;</a>
             </div>
 
-
+            <!-- Page connexion here -->
             <div id="connexion-modal" class="reveal-modal tiny" data-reveal aria-labelledby="connexion" aria-hidden="true" role="dialog">
-                <!-- Page connexion here -->
                 <h3>Connexion</h3>
                 <span id="error9" style="display: none; color: red;">Identifiant ou mot de passe introuvable<br /></span>
                 <span id="error10" style="display: none; color: red;">L'identifiant doit etre composer de 8 chiffres<br /></span>
@@ -184,25 +185,19 @@ try {
             <?php };?>
             <!-- fin banniere -->
 
+            <!--contenu de la page index-->
             <div class="content medium-12 large-8">
-                <h1>Bienvenue sur le projet tutorat</h1>
+                <h1>Bienvenue sur le site de Tutorat de l'IUT de Vélizy !</h1>
                 <p>Si vous êtes étudiant à l'IUT de Vélizy, alors ce site est fait pour vous.
                     Avec ce site et une fois inscrit, vous pourrez demander de l'aide aux autres étudiants
-                    inscrits dans des matières où vous avez des difficultés.<br /> A l'inverse vous pouvez aussi
+                    inscrits dans des matières où vous avez des difficultés.<br />À l'inverse vous pouvez aussi
                     proposer de l'aide dans des matières où vous avez de bonnes capacités.<br />
+                    Si vous avez un probleme, une remarque ou une suggestion, envoyez un mail à nos administrateurs soit via votre messagerie, soit directement depuis votre page de profil.<br />
                     Bonne navigation sur notre site !<br /><br />
-                    NOTE: En vous inscrivant ou connectant sur ce site, vous acceptez l'utilisation de cookies
-                    afin d'améliorer votre navigation. Vous accepter aussi de ne pas poster/écrire de contenus
+                    NOTE: En vous inscrivant ou connectant sur ce site, vous acceptez de ne pas poster/écrire de contenus
                     inappropriés : dans le cas contraire, votre compte sera définitevement supprimé sans préavis
                     par nos administrateurs.
 
-                </p>
-                <p>
-                    <FONT color="red"> INFO IMPORTANTE: Nous sommes en train de changer les fonctions de cryptage des mots de passe: nous allons
-                    donc pour cela devoir sans doute devoir renouveller la base de données afin de l'adapter
-                    à ces nouvelles fonctions et donc les données stockées avant le changement seront détruites.
-                    Si vous n'arrivez pas à vous connecter au site, c'est que la base à été changer: re-créer alors votre compte.<br/>
-                    Veuillez-nous excuser de la gêne occasionnée.</Font>
                 </p>
             </div>
 
@@ -235,6 +230,8 @@ try {
 //Inscription
 
 if (isset($_POST['submit_inscription'])) {
+
+    //récupération des variables du questionnaire
     $identifiant = htmlspecialchars($_POST['identifiant']);
     $nom = htmlspecialchars($_POST['nom']);
     $prenom = htmlspecialchars($_POST['prenom']);
@@ -245,15 +242,15 @@ if (isset($_POST['submit_inscription'])) {
     $annee = htmlspecialchars($_POST['annee']);
 
     if(formValideInscription($bdd,$identifiant,$email,$nom,$prenom,$pass,$pass_verif))
-    {
-		
-		
-		$reqfind = $bdd->prepare('SELECT id_grp from groupe where filiere = :departement AND annee = :annee');
+    {	
+    	//récupération du groupe de l'étudiant par rapport à l'année et la formation qu'il a selectionné
+        $reqfind = $bdd->prepare('SELECT id_grp from groupe where filiere = :departement AND annee = :annee');
         $reqfind->execute(array(
             'departement' => $departement,
             'annee' => $annee));
         $resultatfind = $reqfind->fetch();
 
+        //insertion dans BD du nouvel étudiant
         $req = $bdd->prepare('INSERT INTO etudiant(numero_etudiant, mdp, nom, prenom, email,id_grp) VALUES(:identifiant, :pass, :nom, :prenom, :email, :id_grp)');
         $req->execute(array(
             'identifiant' => $identifiant,
@@ -264,6 +261,7 @@ if (isset($_POST['submit_inscription'])) {
 			'id_grp' => $resultatfind['id_grp']
 			
         ));
+        //confirmation auprès de l'étudiant
         ?><script>swal("Good job!", "Inscription validee!", "success");</script><?php
     } // pas besoin de else : deja geré dans la fonction
 }
@@ -302,6 +300,7 @@ if(isset($_POST['submit_connexion'])) {
     }
 }
 
+//fonction pour vérifier que le questionnaire est bien rempli
 function formValideInscription($bdd,$identifiant,$email,$nom,$prenom,$pass,$pass_verif){
     $valide = true;
 
@@ -338,7 +337,6 @@ function formValideInscription($bdd,$identifiant,$email,$nom,$prenom,$pass,$pass
     }
 
     // Verification serveur (au cas ou que l'utilisateur ferait des betises
-
     if (!preg_match('/^([0-9]){8}$/', $identifiant))
     {
         ?>
@@ -378,7 +376,7 @@ function formValideInscription($bdd,$identifiant,$email,$nom,$prenom,$pass,$pass
         $valide = false;
     }
 
-    if(!preg_match('/^[a-zA-Z0-9!@#$%_;:,*?.]{6,30}$/', $_POST['pass'])) //pass en clair pour verifier son contenu (je pense)
+    if(!preg_match('/^[a-zA-Z0-9!@#$%_;:,*?.]{6,30}$/', $_POST['pass'])) //pass en clair pour verifier son contenu
     {
         ?>
         <script>
@@ -400,6 +398,7 @@ function formValideInscription($bdd,$identifiant,$email,$nom,$prenom,$pass,$pass
     return $valide;
 }
 
+// vérification des données entrées dans le formulaire de connexion
 function formValideConnexion($identifiant)
 {
     $valide = true;
@@ -414,7 +413,7 @@ function formValideConnexion($identifiant)
         <?php
         $valide = false;
     }
-    if(!preg_match('/^[a-zA-Z0-9!@#$%_;:,*?.]{6,30}$/', $_POST['passconnexion'])) //pass en clair pour verifier son contenu (je pense)
+    if(!preg_match('/^[a-zA-Z0-9!@#$%_;:,*?.]{6,30}$/', $_POST['passconnexion'])) //pass en clair pour verifier son contenu
     {
         ?>
         <script>

@@ -111,15 +111,19 @@ if(isset($_SESSION['login']) and isset($_SESSION['pass']))
                 </div>
             </form>
         </div>
+
+        <!-- formulaire pour requête au près d'un admin -->
         <div class="content medium-12 large-6">
             <h4> Envoyer un Mail aux administrateurs</h4>
             <form action="mailAdmin.php" method="GET">
                 <p>
-                    <textarea name="contenuMail" id="contenuMail" rows=10"></textarea>
+                    <textarea  name="contenuMail" id="contenuMail" rows=10"></textarea>
                     <input type="submit" value="Envoyer Mail" name="boutonMail" id="boutonMail" />
+                    <br />
                 </p>
             </form>
         </div>
+
         <a class="exit-off-canvas"></a>
         <?php include('includes/footer_scripts.php'); ?>
 
@@ -150,6 +154,7 @@ if(isset($_SESSION['login']) and isset($_SESSION['pass']))
         </script>
 
     </body>
+    <?php include 'includes/footer.php' ?>
     </html>
     <?php
     function formValideModification($bdd,$email,$pass,$pass_verif){
@@ -202,7 +207,7 @@ if(isset($_SESSION['login']) and isset($_SESSION['pass']))
         }
 
         if($pass && isset($_POST['pass']) && isset($_POST['pass_verif'])){
-            if(!preg_match('/^[a-zA-Z0-9!@#$%_;:,*?.]{6,30}$/', $_POST['pass'])) //pass en clair pour verifier son contenu (je pense)
+            if(!preg_match('/^[a-zA-Z0-9!@#$%_;:,*?.]{6,30}$/', $_POST['pass'])) //pass en clair pour verifier son contenu
             {
                 ?>
                 <script>

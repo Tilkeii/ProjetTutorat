@@ -40,7 +40,7 @@ $matieres = $req->fetchAll();
 														 value="Poster une annonce" data-reveal-id="newpost-modal"/>
 			</div>
 		</div>
-		<table>
+		<table class="hover" style="width:100%">
 			<thead>
 			<tr>
 				<th>Matière</th>
@@ -57,6 +57,7 @@ $matieres = $req->fetchAll();
 								"<td style=\"text-align:center\"><input class=\"button success tiny\" type=\"submit\" value=\"Répondre\" onclick=\"accept_post(".$r["id"].")\"/></td></tr>":
 								"<td style=\"text-align:center\"><input class=\"button warning tiny\" type=\"submit\" value=\"Supprimer\" onclick=\"delete_post(".$r["id"].")\"/></td></tr>");
 			?>
+        </table>
 	</div>
 
 	<!-- Formulaire ajouter annonce -->
@@ -192,7 +193,7 @@ $matieres = $req->fetchAll();
 	</script>
 </body>
 
-<?php //include 'includes/footer.php' ?>
+<?php include 'includes/footer.php' ?>
 </html>
 
 <?php
@@ -200,7 +201,7 @@ $matieres = $req->fetchAll();
 function formValideAnnonce($bdd,$identifiant,$matiere,$commentaire){
 	$valide = true;
 
-	// Matiere existante pls
+	// Matiere existante
 	$reqfind = $bdd->prepare('SELECT id_mat from matiere where id_mat = :id');
 	$reqfind->execute(array(
 			'id' => $matiere
@@ -288,7 +289,6 @@ if (isset($_POST['submit_newpost'])) {
 
 // Suppression annonce
 else if (isset($_POST['submit_delete'])) {
-	?><script>alert('pouf');</script><?php
 }
 
 }
