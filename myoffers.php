@@ -213,6 +213,8 @@ if (isset($_POST['submit_newpost'])) {
 				window.location.href = "myoffers.php";
 			});</script><?php
 	}
+    // on envoie à toutes les personnes
+
 }
 
 }
