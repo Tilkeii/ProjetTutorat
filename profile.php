@@ -115,7 +115,7 @@ if(isset($_SESSION['login']) and isset($_SESSION['pass']))
         <!-- formulaire pour requête au près d'un admin -->
         <div class="content medium-12 large-6">
             <h4> Envoyer un Mail aux administrateurs</h4>
-            <form action="mailAdmin.php" method="GET">
+            <form action="mailAdmin.php" method="POST">
                 <p>
                     <textarea  name="contenuMail" id="contenuMail" rows=10"></textarea>
                     <input type="submit" value="Envoyer Mail" name="boutonMail" id="boutonMail" />
