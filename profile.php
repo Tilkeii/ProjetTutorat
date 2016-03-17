@@ -124,6 +124,40 @@ if(isset($_SESSION['login']) and isset($_SESSION['pass']))
             </form>
         </div>
 
+        <!-- affichage du résultatde l'envoi du mail-->
+        <?php
+        if($_GET["rep"]==1){//mail bien envoyé
+            ?><script>swal({
+                title: "Mail bien envoyé!",
+                text:"Nous avons bien reçu votre message, merci pour votre contribution !",
+                timer: 4000,
+                showConfirmButton: false
+                });
+            </script><?php
+        }
+        else if($_GET["rep"]==2){//mail vide
+            ?><script>swal({
+                title: "Mail non envoyé :",
+                text:"Votre message est vide, remplissez le champ de saisie avant de nous envoyer votre message",
+                timer: 4000,
+                showConfirmButton: false
+                });
+            </script><?php
+        }
+        else if($_GET["rep"]==3){//echec de l'envoi du mail
+            ?><script>swal({
+                title: "Mail non envoyé :",
+                text:"Une erreur est survenue, veuillez réesayer. Si le problème persiste, écrivez-nous via votre messagerie",
+                timer: 4000,
+                showConfirmButton: false
+                });
+            </script><?php
+
+        }
+        ?>
+
+        
+
         <a class="exit-off-canvas"></a>
         <?php include('includes/footer_scripts.php'); ?>
 
