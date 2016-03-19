@@ -17,9 +17,17 @@ $req->execute(array(
 ) or die(print_r($bdd->errorInfo(), true));
 $resultat = $req->fetchAll();
 
-// recuperation matieres
-$req = $bdd->prepare('select * from matiere');
-$req->execute() or die(print_r($bdd->errorInfo(), true));
+// recuperation matieres de l'étudiant
+$req = $bdd->prepare('select id_grp from etudiant where numero_etudiant = :idetu');
+$req->execute(array(
+				'idetu' => $_SESSION['login'])
+) or die(print_r($bdd->errorInfo(), true));
+$resultat2 = $req->fetch();
+
+$req = $bdd->prepare('select * from matiere where id_mat in(select id_mat from cours where id_grp = :idgrp)');
+$req->execute(array(
+				'idgrp' => $resultat2['id_grp'])
+) or die(print_r($bdd->errorInfo(), true));
 $matieres = $req->fetchAll();
 
 ?>
