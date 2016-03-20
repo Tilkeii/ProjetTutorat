@@ -3,12 +3,8 @@ ob_start(); //Permet de mettre le header n'importe ou dans le code : sinon doit 
 session_start();
 
 //connexion a la BD
-try {
-    $bdd = new PDO('mysql:host=89.234.180.28;dbname=w4130d_tutorat;charset=utf8', 'w4130d_tutorat', '159753Tu');
-} catch (PDOException $e) {
-    print "Erreur !: " . $e->getMessage() . "<br/>";
-    die();
-}
+include ('BD/parametres.php');
+$bdd = db_connect();
 ?>
 
 <!DOCTYPE html>

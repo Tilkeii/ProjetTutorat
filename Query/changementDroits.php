@@ -1,8 +1,8 @@
 <?php
 session_start();
 if(isset($_POST["iduser"])){
-    $bdd = new PDO('mysql:host=89.234.180.28;dbname=w4130d_tutorat;charset=utf8', 'w4130d_tutorat', '159753Tu');
-
+    include ('../BD/parametres.php');
+    $bdd = db_connect();
 
     //recuperation du droit actuel de l'utilisateur
     $res = $bdd->prepare('SELECT id_priv from etudiant where numero_etudiant = :iduser');

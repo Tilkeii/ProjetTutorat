@@ -1,0 +1,4 @@
+AuthName "Page protégée"
+AuthType Basic
+AuthUserFile "/BD/.htpasswd"
+Require valid-user

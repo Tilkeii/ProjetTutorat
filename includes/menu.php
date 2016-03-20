@@ -29,7 +29,8 @@
                 <!--<li id="menu_liste_myoffers" class="navbar_menu_item"><a href="myoffers.php" >Mes offres</a></li>-->
                 <li id="menu_modification" class="navbar_menu_item"><a href="profile.php" >Mon profil</a></li>
                 <?php
-                    $bdd = new PDO('mysql:host=89.234.180.28;dbname=w4130d_tutorat;charset=utf8', 'w4130d_tutorat', '159753Tu');
+                    include ('../BD/parametres.php');
+                    $bdd = db_connect();
                     $reqpriv = $bdd->prepare('SELECT id_priv from etudiant where numero_etudiant = :id');
                     $reqpriv->execute(array( 'id' => $_SESSION['login']));
                     $priv = $reqpriv->fetch();

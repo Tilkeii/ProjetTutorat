@@ -4,7 +4,8 @@ session_start();
 
 
 if(isset($_SESSION['login']) and isset($_SESSION['pass'])) {
-    $bdd = new PDO('mysql:host=89.234.180.28;dbname=w4130d_tutorat;charset=utf8', 'w4130d_tutorat', '159753Tu');
+    include ('BD/parametres.php');
+    $bdd = db_connect();
     $reqpriv = $bdd->prepare('SELECT id_priv from etudiant where numero_etudiant = :id');
     $reqpriv->execute(array('id' => $_SESSION['login']));
     $priv = $reqpriv->fetch();

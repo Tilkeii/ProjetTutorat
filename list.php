@@ -5,8 +5,8 @@ if(isset($_SESSION['login']) and isset($_SESSION['pass']))
 {
 
 // recuperation des annonces
-$bdd = new PDO('mysql:host=89.234.180.28;dbname=w4130d_tutorat;charset=utf8', 'w4130d_tutorat', '159753Tu');
-
+include ('BD/parametres.php');
+$bdd = db_connect();
 $req = $bdd->prepare('SELECT id,nom_mat,commentaire,date_publication
 							from needhelp
 							left join matiere on needhelp.id_mat = matiere.id_mat

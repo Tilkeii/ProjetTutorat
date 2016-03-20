@@ -1,14 +1,14 @@
 <?php
 session_start();
 if(isset($_POST["iduser"])){
-    $bdd = new PDO('mysql:host=89.234.180.28;dbname=w4130d_tutorat;charset=utf8', 'w4130d_tutorat', '159753Tu');
-    
+    include ('../BD/parametres.php');
+    $bdd = db_connect(); 
     // Suppression de l'étudiant
     
 
     //suppression des proposition d'aide
     //on envoie un mail pour prévenir la personne qui demandait de l'aide
-    $reqBis = $bdd->prepare('SELECT DISTINCT numero_etudiant FROM needhelp WHERE etat=1 and id IN(SELECT id_needhelp FROM aide WHERE etat=0 AND numero_etudiant= :iduser)');
+    $reqBis = $bdd->prepare('SELECT numero_etudiant FROM needhelp WHERE etat=1 and id IN(SELECT id_needhelp FROM aide WHERE etat=0 AND numero_etudiant= :iduser)');
     $reqBis->execute(array('iduser' => $_POST["iduser"])) or die(print_r('1'.$bdd->errorInfo(),true));
     $resultat = $reqBis->fetchAll();
     foreach($resultat as $r){
@@ -39,7 +39,7 @@ if(isset($_POST["iduser"])){
     //partie suppression demandes
     
     //On recupère les etudiants qui voulaient aider l'élève qui va être supprimer
-    $reqBis = $bdd->prepare('SELECT DISTINCT numero_etudiant FROM aide WHERE etat=0 and id_needhelp in(SELECT id FROM needhelp WHERE etat=1 AND numero_etudiant= :iduser)');
+    $reqBis = $bdd->prepare('SELECT numero_etudiant FROM aide WHERE etat=0 and id_needhelp in(SELECT id FROM needhelp WHERE etat=1 AND numero_etudiant= :iduser)');
     $reqBis->execute(array('iduser' => $_POST["iduser"])) or die(print_r('6'.$bdd->errorInfo(),true));
     $resultat = $reqBis->fetchAll();
     //Ensuite on envoie un mail pour prévenir ces personnes

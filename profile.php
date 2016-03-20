@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <?php
 session_start();
-try {
-	$bdd = new PDO('mysql:host=89.234.180.28;dbname=w4130d_tutorat;charset=utf8', 'w4130d_tutorat', '159753Tu');
-} catch (PDOException $e) {
-	print "Erreur !: " . $e->getMessage() . "<br/>";
-	die();
-}
+include ('BD/parametres.php');
+$bdd = db_connect();
+
 if(isset($_SESSION['login']) and isset($_SESSION['pass']))
 {
     $req = $bdd->prepare('SELECT * from etudiant left outer join groupe on etudiant.id_grp = groupe.id_grp where numero_etudiant = :id');

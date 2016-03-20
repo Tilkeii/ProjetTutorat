@@ -4,8 +4,8 @@ if(isset($_POST["idannonce"])){
     include('../Helper/Helper_Mail.php');
 	include ('../templates/template.php');
 
-    $bdd = new PDO('mysql:host=89.234.180.28;dbname=w4130d_tutorat;charset=utf8', 'w4130d_tutorat', '159753Tu');
-
+    include ('../BD/parametres.php');
+    $bdd = db_connect();
     // Mail demandeur
     $req = $bdd->prepare('SELECT email, commentaire
                           FROM needhelp
