@@ -62,8 +62,40 @@ if(isset($_SESSION['login']) and isset($_SESSION['pass'])) {
                         echo "</tr>";
                     }
 		    		?>
-				</table>	
-			</div> 	
+				</table>
+
+                <!-- partie ajout d'une news -->
+                <div class="large-4 small-12 columns"><input type="submit" class="button small" style="width:100%"
+														 value="Poster une news" data-reveal-id="newpost-modal"/>
+                    <div id="newpost-modal" class="reveal-modal small" data-reveal aria-labelledby="newpost" aria-hidden="true" role="dialog">
+                        <form data-abide action="" method="post">
+                            <h3> Nouvelle news </h3>
+			                <div class="row">
+				                <div class="small-12 columns">
+					                <label>Titre de la news :
+                                        <input type="text" name="titre" placeholder=""/>
+					                </label>
+				                </div>
+			                </div>
+			                <div class="row">
+				                <div class="small-12 columns">
+					                <label> Contenu de la news :
+						                <small class="chars_info"></small>
+						                    <textarea class="commentaire" name="commentaire" rows="3" maxlength="160"
+								                placeholder="Contenu de la news" required></textarea>
+					                </label>
+				                </div>
+			                </div>
+			                <div class="row">
+				                <div class="small-12 small-centered text-center columns">
+					                <input class="button small secondary" type="submit" name="submit_newpost" value="Valider"/>
+				                </div>
+			                </div>
+		                </form>
+		                <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+	                </div>
+                </div>
+            </div> 	
 		</div>	
         <?php include('includes/footer_scripts.php'); ?>
 		<script>
