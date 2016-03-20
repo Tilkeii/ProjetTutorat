@@ -81,14 +81,14 @@ if(isset($_SESSION['login']) and isset($_SESSION['pass'])) {
 				                <div class="small-12 columns">
 					                <label> Contenu de la news :
 						                <small class="chars_info"></small>
-						                    <textarea class="commentaire" name="commentaire" rows="3" maxlength="160"
+						                    <textarea class="contenu" name="contenu" rows="4" maxlength="300"
 								                placeholder="Contenu de la news" required></textarea>
 					                </label>
 				                </div>
 			                </div>
 			                <div class="row">
 				                <div class="small-12 small-centered text-center columns">
-					                <input class="button small secondary" type="submit" name="submit_newpost" value="Valider"/>
+					                <input class="button small secondary" type="submit" name="submit_news" value="Valider"/>
 				                </div>
 			                </div>
 		                </form>
@@ -100,6 +100,23 @@ if(isset($_SESSION['login']) and isset($_SESSION['pass'])) {
         <?php include('includes/footer_scripts.php'); ?>
 		<script>
 			$(document).foundation();
+            $(document).ready(function () {
+			    $('.contenu').change(function () {
+						var charleft = 300 - $('.contenu').val().length;
+						if (charleft > 20)
+							$('.chars_info').text(charleft + ' caractères restant').css('color', 'green');
+						else
+							$('.chars_info').text(charleft + ' caractères restant').css('color', 'red');
+					})
+					.keyup(function () {
+						var charleft = 300 - $('.contenu').val().length;
+						if (charleft > 20)
+							$('.chars_info').text(charleft + ' caractères restant').css('color', 'green');
+						else
+							$('.chars_info').text(charleft + ' caractères restant').css('color', 'red');
+					});
+		});
+
 			function delete_user(iduser){
                 swal({
 						title: "Attention !",
@@ -187,6 +204,30 @@ if(isset($_SESSION['login']) and isset($_SESSION['pass'])) {
     <?php include 'includes/footer.php' ?>
 </html>
 <?php
+
+if(isset($_POST['submit_news'])){
+    $titre = $_POST["titre"];
+    $contenu = $_POST["contenu"];
+
+    if(strlen($contenu)<=300){
+        $req = $bdd->prepare('DELETE FROM news');
+        $req->execute() or die(print_r($bdd->errorInfo(), true));
+
+        $req = $bdd->prepare('INSERT INTO news(titre,contenu,datePublication) VALUES(:titre, :contenu, :datep)');
+        $req->execute(array(
+                'titre' => $titre,
+                'contenu' => $contenu,
+                'datep' => date('Y-m-d')
+        )) or die(print_r($bdd->errorInfo(), true));
+        ?>
+        <script>swal({title : "Good job!", text : "Ajout réussi!", type : "success"}, function () {
+            window.location.href = "admin.php"
+            });
+        </script>
+        <?php
+    }
+}
+        
     } else {
         header('Location: index.php');
     }

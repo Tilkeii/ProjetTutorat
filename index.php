@@ -200,7 +200,24 @@ try {
 
                 </p>
             </div>
+            <br/>
+            <br/>
 
+            <!--partie news-->
+            <div class="content medium-12 large-8" id="news">
+                <?php
+                $req = $bdd->prepare('SELECT titre,contenu,datePublication from news');
+                $req->execute();
+                $resultat = $req->fetch();
+                ?>
+                
+                <h3> Le coin news :</h3>
+
+                Le : <?php echo date("d/m/Y", strtotime($resultat["datePublication"]))?> <br/> <br/>
+                <b> <?php echo $resultat["titre"]?> </b> <br/> <br/>
+                <?php echo $resultat["contenu"]?> 
+
+            </div>
             <?php include 'includes/footer.php' ?>
 
             <a class="exit-off-canvas"></a>
