@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Jeu 17 Mars 2016 à 21:23
+-- Généré le :  Lun 21 Mars 2016 à 09:20
 -- Version du serveur :  5.6.29-1~dotdeb+7.1
 -- Version de PHP :  5.5.21
 
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `aide` (
   `numero_etudiant` int(8) NOT NULL,
   `id_needhelp` int(11) NOT NULL,
   `etat` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Contenu de la table `aide`
@@ -39,7 +39,8 @@ CREATE TABLE IF NOT EXISTS `aide` (
 
 INSERT INTO `aide` (`id`, `numero_etudiant`, `id_needhelp`, `etat`) VALUES
 (3, 21400499, 5, 0),
-(4, 21400006, 7, 0);
+(4, 21400006, 7, 0),
+(6, 21400641, 12, 0);
 
 -- --------------------------------------------------------
 
@@ -237,7 +238,7 @@ CREATE TABLE IF NOT EXISTS `etudiant` (
 
 INSERT INTO `etudiant` (`numero_etudiant`, `mdp`, `nom`, `prenom`, `age`, `email`, `id_priv`, `id_grp`) VALUES
 (12345677, 'cbb7353e6d953ef360baf960c122346276c6e320', 'LEPONGE', 'BOB', NULL, 'david.auger@uvsq.fr', 1, 2),
-(21200200, 'a3b47fe3de869322953c70dab822a3d9359e492f', 'Test', 'test', NULL, 'vdo.temp@laposte.net', 1, 2),
+(21200200, 'a3b47fe3de869322953c70dab822a3d9359e492f', 'test', 'test', NULL, 'vdo.temp@laposte.net', 2, 6),
 (21400006, 'b1b3773a05c0ed0176787a4f1574ff0075f7521e', 'Beudard', 'Quentin', NULL, 'a.b@gmail.com', 1, 6),
 (21400036, 'af9ddc62221cf2e0f00964ba89454de1f5c0ef9a', 'MANIOC', 'Nicolas', NULL, 'nounours.97178@gmail.com', 1, 2),
 (21400046, '611206f77d4d17ba98b51ccf41c4575ea9bb85f2', 'arnaud', 'arnaud', NULL, 'arnaud-627@hotmail.fr', 1, 6),
@@ -255,6 +256,7 @@ INSERT INTO `etudiant` (`numero_etudiant`, `mdp`, `nom`, `prenom`, `age`, `email
 (21404197, '2c3923788a3fcea36b92005ebfde84fef29dcec9', 'martinez', 'louis', NULL, 'md.louix@gmail.com', 2, 6),
 (21407826, '9cf95dacd226dcf43da376cdb6cbba7035218921', 'Rochet', 'Alban', NULL, 'albanrochet@gmail.com', 1, 6),
 (21500363, 'c6c4940b323ff81c66e02a02e0281c370c535008', 'Dinis', 'Julien', NULL, 'VGZEdits@gmail.com', 1, 2),
+(21500370, '0b71cb9efb5446e6b443a006bfa50a1a9cb7c116', 'Bisson', 'Nicolas', NULL, 'bissonnico@hotmail.fr', 1, 2),
 (21500875, 'c581c556b1aef939ba11d93c153383fb4638d67d', 'BOULLET', 'Nicolas', NULL, 'boullet.nicolas@gmail.com', 1, 2),
 (21501294, 'dc316b2d9d7e725231b66ac6d306fa8633486857', 'Pereira', 'Laura', NULL, 'lauraveloso11@gmail.com', 1, 2),
 (21501454, 'd89dcc09e30460a120604606beb637b075b06e0b', 'Tran', 'Octavia', NULL, 'flavia.thuy@gmail.com', 1, 2),
@@ -301,6 +303,24 @@ CREATE TABLE IF NOT EXISTS `helper` (
   `commentaire` varchar(300) DEFAULT NULL,
   `date_publication` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `infos`
+--
+
+CREATE TABLE IF NOT EXISTS `infos` (
+  `anneeEnCours` int(11) NOT NULL,
+  `anneeSuivante` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `infos`
+--
+
+INSERT INTO `infos` (`anneeEnCours`, `anneeSuivante`) VALUES
+(2015, 2016);
 
 -- --------------------------------------------------------
 
@@ -380,7 +400,7 @@ CREATE TABLE IF NOT EXISTS `needhelp` (
   `commentaire` varchar(300) DEFAULT NULL,
   `date_publication` date NOT NULL,
   `etat` int(11) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 --
 -- Contenu de la table `needhelp`
@@ -389,7 +409,27 @@ CREATE TABLE IF NOT EXISTS `needhelp` (
 INSERT INTO `needhelp` (`id`, `numero_etudiant`, `id_mat`, `commentaire`, `date_publication`, `etat`) VALUES
 (1, 21404197, 2, 'PLS commencer a poster des demandes', '2016-03-12', 0),
 (5, 21401303, 4, 'Aidez moi vous êtes mon dernier espoir...', '2016-03-15', 1),
-(7, 21401575, 15, 'Comment on fait pour créer un fichier XML en PHP svp, c''est pour un TP', '2016-03-17', 1);
+(7, 21401575, 15, 'Comment on fait pour créer un fichier XML en PHP svp, c''est pour un TP', '2016-03-17', 1),
+(12, 21200200, 1, 'test', '2016-03-20', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `news`
+--
+
+CREATE TABLE IF NOT EXISTS `news` (
+  `titre` varchar(50) NOT NULL,
+  `contenu` varchar(300) NOT NULL,
+  `datePublication` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `news`
+--
+
+INSERT INTO `news` (`titre`, `contenu`, `datePublication`) VALUES
+('Update', 'Merci à ceux qui se sont inscrits dernièrement : cela nous a permis de voir des bugs que nous sommes en train de corriger. Vous retrouverez ici sur ce nouvel ajout les dernières nouvelles concernant le site.', '2016-03-20');
 
 -- --------------------------------------------------------
 
@@ -482,7 +522,7 @@ ALTER TABLE `privileges`
 -- AUTO_INCREMENT pour la table `aide`
 --
 ALTER TABLE `aide`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT pour la table `groupe`
 --
@@ -502,7 +542,7 @@ ALTER TABLE `matiere`
 -- AUTO_INCREMENT pour la table `needhelp`
 --
 ALTER TABLE `needhelp`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT pour la table `privileges`
 --

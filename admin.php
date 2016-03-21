@@ -14,9 +14,14 @@ if(isset($_SESSION['login']) and isset($_SESSION['pass'])) {
 	//recuperation des etudiants
 	$req = $bdd->prepare('select * from etudiant where numero_etudiant<>:id');
 	$req->execute(array('id' => $_SESSION['login'])) or die(print_r($bdd->errorinfo(),true));
-	$etudiants = $req->fetchAll();
+	$etudiants = $req->fetchall();
 
-    if ($priv['id_priv'] == 2) {
+    //recupération des années
+	$req = $bdd->prepare('select * from infos');
+	$req->execute();
+	$annees = $req->fetch();
+
+    if ($priv['id_priv'] > 1) {
 ?>
 <html>
     <!-- head -->
@@ -34,7 +39,7 @@ if(isset($_SESSION['login']) and isset($_SESSION['pass'])) {
 				</div>
                 <div class="row">
                     <div class="large-4 small-12 columns"><input type="submit" class="button small" style="width:100%" value="Changer d'année"
-                    data-reveal-id="newpost-modal"/> <div> Année actuelle: 2015/2016 </div>
+                    onclick="changementAnnee()"/> <div> Année scolaire actuelle: <?php echo("".$annees["anneeEnCours"]."/".$annees["anneeSuivante"]);?> </div> <br/>
                 </div>
 				<table>
 		    		<thead>
@@ -193,6 +198,37 @@ if(isset($_SESSION['login']) and isset($_SESSION['pass'])) {
                         }
                         else {
                             swal({title : "Annulation", text : "Droits non enlevés", type : "error"}, function () {
+						    });
+
+                        }
+					});
+
+            }
+            function changementAnnee(){
+                    swal({
+						title: "Attention !",
+						text: "Voulez-vous vraiment passer à l'année suivante ? Cela signifie supprimer toutes les aides en cours et les étudiants de deuxième année.",
+						type: "warning",
+						cancelButtonText: "Annuler",
+						showCancelButton: true,
+						cancelButtonColor: "#FF0000",
+						cancelButtonText: "Annuler",
+						confirmButtonText: "Confirmer",
+						closeOnConfirm: false,
+						closeOnCancel: false,
+						showLoaderOnConfirm: true,
+						showLoaderOnCancel: true
+					},
+					function(isConfirm){
+                        if(isConfirm){
+						        $.post("Query/changementAnnee.php",function(){
+							        swal({title : "Good job!", text : "Passage d'année effectuée !", type : "success"}, function () {
+								    window.location.href = "admin.php";
+							    });
+						    });
+                        }
+                        else {
+                            swal({title : "Annulation", text : "Passage d'année non effectuée", type : "error"}, function () {
 						    });
 
                         }

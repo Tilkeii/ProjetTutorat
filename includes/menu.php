@@ -34,7 +34,7 @@
                     $reqpriv = $bdd->prepare('SELECT id_priv from etudiant where numero_etudiant = :id');
                     $reqpriv->execute(array( 'id' => $_SESSION['login']));
                     $priv = $reqpriv->fetch();
-                    if($priv['id_priv'] == 2)
+                    if($priv['id_priv'] > 1)
                         echo "<li id=\"menu_admin\" class=\"navbar_menu_item\"><a href=\"admin.php\">Administration</a></li>";
                 ?>
                 <li id="menu_deconnexion" class="navbar_menu_item"><a href="deconnexion.php">Deconnexion</a></li>
