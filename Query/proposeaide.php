@@ -25,13 +25,13 @@ if(isset($_POST["idannonce"])){
     $mail_demandeur
         ->to($demandeur["email"])
         ->sujet("Proposition d'aide")
-        ->content("L'étudiant".$demandeur["prenom"]." ".$demandeur["nom"]." a répondu a votre demande d'aide : ".$demandeur["commentaire"].", merci de confirmer dans votre espace");
+        ->content("L'etudiant".$demandeur["prenom"]." ".$demandeur["nom"]." a repondu a votre demande d'aide : ".$demandeur["commentaire"].", merci de confirmer dans votre espace");
 
     $mail_helper = new Helper_Mail();
     $mail_helper
         ->to($helper["email"])
         ->sujet("Proposition d'aide")
-        ->content("Vous avez répondu a l'annonce : ".$demandeur["commentaire"].", merci d'attendre la confirmation de l'étudiant.");
+        ->content("Vous avez repondu a l'annonce : ".$demandeur["commentaire"].", merci d'attendre la confirmation de l'étudiant.");
 
     if($mail_demandeur->send() && $mail_helper->send()){
         $req = $bdd->prepare('UPDATE needhelp
@@ -49,7 +49,6 @@ if(isset($_POST["idannonce"])){
             ))
         or die(print_r('4'.$bdd->errorInfo(), true));
 
-        echo "ok";
     }
     else{
         echo "not ok lol";

@@ -115,6 +115,7 @@ if(isset($_SESSION['login']) and isset($_SESSION['pass']))
             <form action="mailAdmin.php" method="GET">
                 <p>
                     <textarea name="contenuMail" id="contenuMail" rows=10></textarea>
+                    <input type="hidden" value="<?php echo $_GET["rep"]?>" id="rep" name="rep" />
                     <input type="submit" value="Envoyer Mail" name="boutonMail" id="boutonMail" />
                     <br />
                 </p>
@@ -145,6 +146,16 @@ if(isset($_SESSION['login']) and isset($_SESSION['pass']))
             ?><script>swal({
                 title: "Mail non envoyé :",
                 text:"Une erreur est survenue, veuillez réesayer. Si le problème persiste, écrivez-nous via votre messagerie",
+                timer: 4000,
+                showConfirmButton: false
+                });
+            </script><?php
+
+        }
+        else if($_GET["rep"]==4){//echec de l'envoi du mail
+            ?><script>swal({
+                title: "Mail non envoyé :",
+                text:"Vous avez déjà envoyé un mail durant cette session.",
                 timer: 4000,
                 showConfirmButton: false
                 });
