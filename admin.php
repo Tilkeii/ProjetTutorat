@@ -34,13 +34,13 @@ if(isset($_SESSION['login']) and isset($_SESSION['pass'])) {
             <?php include 'includes/menu.php' ?>
 			
             <div class="content medium-12 large-8">
-            	<div class="row">
-		    		<div class="large-8 small-12 columns"><h3>Liste des Etudiants</h3></div>
-				</div>
                 <div class="row">
                     <div class="large-4 small-12 columns"><input type="submit" class="button small" style="width:100%" value="Changer d'année"
                     onclick="changementAnnee()"/> <div> Année scolaire actuelle: <?php echo("".$annees["anneeEnCours"]."/".$annees["anneeSuivante"]);?> </div> <br/>
                 </div>
+            	<div class="row">
+		    		<div class="large-8 small-12 columns"><h3>Liste des Etudiants</h3></div>
+				</div>
 				<table>
 		    		<thead>
 		    		<tr>

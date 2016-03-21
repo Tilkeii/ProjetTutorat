@@ -274,8 +274,11 @@ if (isset($_POST['submit_inscription'])) {
 			'id_grp' => $resultatfind['id_grp']
 			
         ));
-        //confirmation auprès de l'étudiant
-        ?><script>swal("Good job!", "Inscription validee!", "success");</script><?php
+        //On renvoie l'étudiant sur sa page de profil(la confirmation se fera sur sa page   
+            $_SESSION['login'] = $identifiant;
+            $_SESSION['pass'] = $pass;
+            header('Location: profile.php?rep=-2');
+            ob_end_flush();
     } // pas besoin de else : deja geré dans la fonction
 }
 

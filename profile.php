@@ -124,7 +124,10 @@ if(isset($_SESSION['login']) and isset($_SESSION['pass']))
 
         <!-- affichage du résultatde l'envoi du mail-->
         <?php
-        if($_GET["rep"]==1){//mail bien envoyé
+        if($_GET["rep"]==-2){//inscription effectuée
+            ?><script>swal({title: "Good job!",text: "Inscription réussie !",type :"success"});</script><?php
+        }
+        else if($_GET["rep"]==1){//mail bien envoyé
             ?><script>swal({
                 title: "Mail bien envoyé!",
                 text:"Nous avons bien reçu votre message, merci pour votre contribution !",
