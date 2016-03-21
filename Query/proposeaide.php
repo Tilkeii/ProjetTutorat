@@ -6,7 +6,7 @@ if(isset($_POST["idannonce"])){
     include ('../BD/parametres.php');
     $bdd = db_connect();
     // Mail demandeur
-    $req = $bdd->prepare('SELECT email, commentaire
+    $req = $bdd->prepare('SELECT email,prenom,nom, commentaire
                           FROM needhelp
                           LEFT JOIN etudiant
                           ON needhelp.numero_etudiant = etudiant.numero_etudiant
@@ -25,13 +25,13 @@ if(isset($_POST["idannonce"])){
     $mail_demandeur
         ->to($demandeur["email"])
         ->sujet("Proposition d'aide")
-        ->content("Un etudiant a repondu a votre demande d'aide : ".$demandeur["commentaire"].", merci de confirmer dans votre espace");
+        ->content("L'étudiant".$demandeur["prenom"]." ".$demandeur["nom"]." a répondu a votre demande d'aide : ".$demandeur["commentaire"].", merci de confirmer dans votre espace");
 
     $mail_helper = new Helper_Mail();
     $mail_helper
         ->to($helper["email"])
         ->sujet("Proposition d'aide")
-        ->content("Vous avez repondu a l'annonce : ".$demandeur["commentaire"].", merci d'attendre la confirmation de l'etudiant");
+        ->content("Vous avez répondu a l'annonce : ".$demandeur["commentaire"].", merci d'attendre la confirmation de l'étudiant.");
 
     if($mail_demandeur->send() && $mail_helper->send()){
         $req = $bdd->prepare('UPDATE needhelp
