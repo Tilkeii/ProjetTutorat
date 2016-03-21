@@ -29,7 +29,7 @@
                 <!--<li id="menu_liste_myoffers" class="navbar_menu_item"><a href="myoffers.php" >Mes offres</a></li>-->
                 <li id="menu_modification" class="navbar_menu_item"><a href="profile.php" >Mon profil</a></li>
                 <?php
-                    include ('../BD/parametres.php');
+                    include_once('BD/parametres.php');
                     $bdd = db_connect();
                     $reqpriv = $bdd->prepare('SELECT id_priv from etudiant where numero_etudiant = :id');
                     $reqpriv->execute(array( 'id' => $_SESSION['login']));

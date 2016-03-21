@@ -307,7 +307,7 @@ if(isset($_POST['submit_connexion'])) {
         {
             $_SESSION['login'] = $id;
             $_SESSION['pass'] = $passconnexion;
-            header('Location: profile.php');
+            header('Location: profile.php?rep=-1');
             ob_end_flush();
         }
     }
