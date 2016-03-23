@@ -27,7 +27,7 @@
                 <li id="menu_liste_egolist" class="navbar_menu_item"><a href="egolist.php" >Mes demandes</a></li>
                 <li id="menu_liste_myhelp" class="navbar_menu_item"><a href="myhelp.php" >Mes echanges en cours</a></li>
                 <!--<li id="menu_liste_myoffers" class="navbar_menu_item"><a href="myoffers.php" >Mes offres</a></li>-->
-                <li id="menu_modification" class="navbar_menu_item"><a href="profile.php" >Mon profil</a></li>
+                <li id="menu_modification" class="navbar_menu_item"><a href="profile.php?rep=-1" >Mon profil</a></li>
                 <?php
                     include_once('BD/parametres.php');
                     $bdd = db_connect();
