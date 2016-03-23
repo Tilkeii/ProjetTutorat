@@ -1,8 +1,10 @@
 <?php
 session_start();
 if(isset($_POST["iduser"])){
+    include('../Helper/Helper_Mail.php');
     include ('../BD/parametres.php');
     $bdd = db_connect(); 
+    $bdd2 = db_connect(); 
     // Suppression de l'étudiant
     
 
@@ -10,19 +12,19 @@ if(isset($_POST["iduser"])){
     //on envoie un mail pour prévenir la personne qui demandait de l'aide
     $reqBis = $bdd->prepare('SELECT numero_etudiant FROM needhelp WHERE etat=1 and id IN(SELECT id_needhelp FROM aide WHERE etat=0 AND numero_etudiant= :iduser)');
     $reqBis->execute(array('iduser' => $_POST["iduser"])) or die(print_r('1'.$bdd->errorInfo(),true));
-    $resultat = $reqBis->fetchAll();
-    foreach($resultat as $r){
-        $req = $bdd->prepare('SELECT email,nom,prenom FROM etudiant WHERE numero_etudiant= :iduser2');
+    $resultat = $reqBis->fetchall();
+    foreach ($resultat as $r){
+        $req = $bdd2->prepare('SELECT email,nom,prenom FROM etudiant WHERE numero_etudiant = :iduser2');
         $req->execute(array(
 	    			'iduser2' => $r['numero_etudiant'])
-                ) or die(print_r('2'.$bdd->errorInfo(), true));
+                ) or die(print_r('2'.$bdd2->errorInfo(),true));
         $resultatfind = $req->fetch();
         // Envoi du mail
         $mail_demandeur = new Helper_Mail();
         $mail_demandeur
             ->to($resultatfind['email'])
-            ->sujet("Annulation echange")
-            ->content("Bonjour ".$resultatfind["prenom"]." ".$resultatfind["nom"]." .Malheuresement, nous avons banni un élève qui souhaitait vous aider :
+            ->sujet('Annulation echange')
+            ->content("Bonjour ".$resultatfind['prenom']." ".$resultatfind['nom']." .Malheuresement, nous avons banni un élève qui souhaitait vous aider :
             nous avons donc interrompu l'echange en cours et de nouvelles personnes peuvent maintenant vous proposer votre aide. Bonne journée !")
             ->send();
 
@@ -44,17 +46,17 @@ if(isset($_POST["iduser"])){
     $resultat = $reqBis->fetchAll();
     //Ensuite on envoie un mail pour prévenir ces personnes
     foreach($resultat as $r){
-        $req = $bdd->prepare('SELECT email,nom,prenom FROM etudiant WHERE numero_etudiant= :iduser2');
+        $req = $bdd2->prepare('SELECT email,nom,prenom FROM etudiant WHERE numero_etudiant= :iduser2');
         $req->execute(array(
 	    			'iduser2' => $r['numero_etudiant'])
-                ) or die(print_r('7'.$bdd->errorInfo(), true));
+                ) or die(print_r('7'.$bdd2->errorInfo(), true));
         $resultatfind = $req->fetch();
         // Envoi du mail
         $mail_demandeur = new Helper_Mail();
         $mail_demandeur
             ->to($resultatfind['email'])
-            ->sujet("Annulation echange")
-            ->content("Bonjour ".$resultatfind["prenom"]." ".$resultatfind["nom"]." .Malheuresement, nous avons banni un élève que vous souhaitiez aider :
+            ->sujet('Annulation echange')
+            ->content("Bonjour ".$resultatfind['prenom']." ".$resultatfind['nom']." .Malheuresement, nous avons banni un élève que vous souhaitiez aider :
             nous avons donc interrompu l'echange en cours.N'hésitez pas à aider d'autres personnes. Bonne journée !")
             ->send();
 

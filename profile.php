@@ -137,47 +137,54 @@ if(isset($_SESSION['login']) and isset($_SESSION['pass']))
         
 
         <!-- affichage du résultatde l'envoi du mail-->
+        
         <?php
-        if($_GET["rep"]==-2){//inscription effectuée
-            ?><script>swal({title: "Good job!",text: "Inscription réussie !",type :"success"});</script><?php
-        }
-        else if($_GET["rep"]==1){//mail bien envoyé
-            ?><script>swal({
-                title: "Mail bien envoyé!",
-                text:"Nous avons bien reçu votre message, merci pour votre contribution !",
-                timer: 4000,
-                showConfirmButton: false
+        if(isset($_GET["rep"])){
+            if($_GET["rep"]==-2){//inscription effectuée
+           	?><script>swal({title: "Good job!",text: "Inscription réussie !",type :"success"});</script><?php
+            }
+            else if($_GET["rep"]==1){//mail bien envoyé
+            	?><script>swal({
+                    title: "Mail bien envoyé!",
+                    text:"Nous avons bien reçu votre message, merci pour votre contribution !",
+                    timer: 4000,
+                    showConfirmButton: false
                 });
-            </script><?php
-        }
-        else if($_GET["rep"]==2){//mail vide
-            ?><script>swal({
-                title: "Mail non envoyé :",
-                text:"Votre message est vide, remplissez le champ de saisie avant de nous envoyer votre message",
-                timer: 4000,
-                showConfirmButton: false
-                });
-            </script><?php
-        }
-        else if($_GET["rep"]==3){//echec de l'envoi du mail
-            ?><script>swal({
-                title: "Mail non envoyé :",
-                text:"Une erreur est survenue, veuillez réesayer. Si le problème persiste, écrivez-nous via votre messagerie",
-                timer: 4000,
-                showConfirmButton: false
-                });
-            </script><?php
+                </script><?php
+            }
+            else if($_GET["rep"]==2){//mail vide
+                ?><script>swal({
+                    title: "Mail non envoyé :",
+                    text:"Votre message est vide, remplissez le champ de saisie avant de nous envoyer votre message",
+                    timer: 4000,
+                    showConfirmButton: false
+                    });
+                </script><?php
+            }
+            else if($_GET["rep"]==3){//echec de l'envoi du mail
+                ?><script>swal({
+                    title: "Mail non envoyé :",
+                    text:"Une erreur est survenue, veuillez réesayer. Si le problème persiste, écrivez-nous via votre messagerie",
+                    timer: 4000,
+                    showConfirmButton: false
+                    });
+                </script><?php
 
-        }
-        else if($_GET["rep"]==4){//echec de l'envoi du mail
-            ?><script>swal({
-                title: "Mail non envoyé :",
-                text:"Vous avez déjà envoyé un mail durant cette session.",
-                timer: 4000,
-                showConfirmButton: false
-                });
-            </script><?php
+            }
+        
+            else if($_GET["rep"]==4){//echec de l'envoi du mail
+                ?><script>swal({
+                    title: "Mail non envoyé :",
+                    text:"Vous avez déjà envoyé un mail durant cette session.",
+                    timer: 4000,
+                    showConfirmButton: false
+                    });
+                </script><?php
 
+            }
+        }
+        else{
+            header('Location:profile.php?rep=-1');
         }
         ?>
 

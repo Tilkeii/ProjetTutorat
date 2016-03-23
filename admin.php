@@ -35,9 +35,23 @@ if(isset($_SESSION['login']) and isset($_SESSION['pass'])) {
 			
             <div class="content medium-12 large-8">
                 <div class="row">
-                    <div class="large-4 small-12 columns"><input type="submit" class="button small" style="width:100%" value="Changer d'année"
-                    onclick="changementAnnee()"/> <div> Année scolaire actuelle: <?php echo("".$annees["anneeEnCours"]."/".$annees["anneeSuivante"]);?> </div> <br/>
+                    <h3>Liste des options disponibles</h3>
+                    <br/>
+                    <table>
+                    	<tr>
+                    	    <td>
+                    	    <div class="large-4 small-10 columns"> <input type="submit" class="button small" style="width:100%" value="Changer d'année" onclick="changementAnnee()"/> </div>
+                    	    <div class="large-4 small-10 columns"> <input type="submit" class="button small" style="width:100%" value="Poster une news" data-reveal-id="newpost-modal"/> </div>
+                    	    </td>
+                    	</tr>
+                    	<tr>
+                    	    <td>
+                    	        <div class="large-4 small-10 columns"> <input type="submit" class="button small" style="width:100%" value="Supprimer le contenu du chat" onclick="suppressionContenuChat()"/> </div>
+                    	    </td>
+                    	</tr>
+                    </table>
                 </div>
+                <div> Année scolaire actuelle: <?php echo("".$annees["anneeEnCours"]."/".$annees["anneeSuivante"]);?> </div> <br/>
             	<div class="row">
 		    		<div class="large-8 small-12 columns"><h3>Liste des Etudiants</h3></div>
 				</div>
@@ -71,8 +85,7 @@ if(isset($_SESSION['login']) and isset($_SESSION['pass'])) {
 				</table>
 
                 <!-- partie ajout d'une news -->
-                <div class="large-4 small-12 columns"><input type="submit" class="button small" style="width:100%"
-														 value="Poster une news" data-reveal-id="newpost-modal"/>
+                
                     <div id="newpost-modal" class="reveal-modal small" data-reveal aria-labelledby="newpost" aria-hidden="true" role="dialog">
                         <form data-abide action="" method="post">
                             <h3> Nouvelle news </h3>
@@ -226,6 +239,37 @@ if(isset($_SESSION['login']) and isset($_SESSION['pass'])) {
                         if(isConfirm){
 						        $.post("Query/changementAnnee.php",function(){
 							        swal({title : "Good job!", text : "Passage d'année effectuée !", type : "success"}, function () {
+								    window.location.href = "admin.php";
+							    });
+						    });
+                        }
+                        else {
+                            swal({title : "Annulation", text : "Passage d'année non effectuée", type : "error"}, function () {
+						    });
+
+                        }
+					});
+
+            }
+            function suppressionContenuChat(){
+                    swal({
+						title: "Attention !",
+						text: "Supprimer le contenu du chat de la base de données ?",
+						type: "warning",
+						cancelButtonText: "Annuler",
+						showCancelButton: true,
+						cancelButtonColor: "#FF0000",
+						cancelButtonText: "Annuler",
+						confirmButtonText: "Confirmer",
+						closeOnConfirm: false,
+						closeOnCancel: false,
+						showLoaderOnConfirm: true,
+						showLoaderOnCancel: true
+					},
+					function(isConfirm){
+                        if(isConfirm){
+						        $.post("Query/suppressionContenuChat.php",function(){
+							        swal({title : "Good job!", text : "Suppression du contenu du chat effectuée", type : "success"}, function () {
 								    window.location.href = "admin.php";
 							    });
 						    });
