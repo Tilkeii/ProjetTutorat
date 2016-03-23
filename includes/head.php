@@ -7,4 +7,5 @@
     <script src="sweetalert-master/dist/sweetalert.min.js"></script>
     <script src="foundation/js/vendor/jquery.js"></script>
     <script src="foundation/js/vendor/modernizr.js"></script>
+    <script type="text/javascript" src="minichat.js"></script>
 </head>

@@ -17,7 +17,7 @@ if(isset($_SESSION['login']) and isset($_SESSION['pass']))
     <?php include('includes/head.php'); ?>
 
     <!-- body -->
-    <body>
+    <body onload="refreshChat();">
     <title>Mon profil</title>
     <div class="off-canvas-wrap" data-offcanvas>
 
@@ -121,6 +121,20 @@ if(isset($_SESSION['login']) and isset($_SESSION['pass']))
                 </p>
             </form>
         </div>
+        
+        <div class="content medium-12 large-6">
+        	<h4> Mini-chat :</h4>
+        	<!-- Affichage du minichat ici -->
+		<div id="minichat" style='margin:0px auto;width:900px;'>
+		</div>
+		<!-- Fin Affichage du minichat -->
+		<p>
+			<input type="hidden" value=<?php echo $resultat['prenom']?> name="pseudo" id="pseudo" />
+			Message : <br/><textarea name="message" rows="1" cols="30" id="message"></textarea><br />
+			<input type="submit" value="Envoyer" onclick="submitChat();" />
+		</p>
+        </div>
+        
 
         <!-- affichage du résultatde l'envoi du mail-->
         <?php

@@ -101,8 +101,11 @@ if(isset($_SESSION['login']) and isset($_SESSION['pass'])) {
 		                <a class="close-reveal-modal" aria-label="Close">&#215;</a>
 	                </div>
                 </div>
-            </div> 	
-		</div>	
+            </div>	
+	</div>
+	
+        
+        
         <?php include('includes/footer_scripts.php'); ?>
 		<script>
 			$(document).foundation();
