@@ -15,7 +15,7 @@ if(isset($_POST["idannonce"])){
     $demandeur = $req->fetch();
 
     // Mail helper
-    $req = $bdd->prepare('SELECT email
+    $req = $bdd->prepare('SELECT email,nom,prenom
                           FROM aide
                           LEFT JOIN etudiant
                           ON aide.numero_etudiant = etudiant.numero_etudiant
@@ -39,14 +39,14 @@ if(isset($_POST["idannonce"])){
     $mail_demandeur
         ->to($demandeur["email"])
         ->sujet("Acceptation d'aide")
-        ->content("Vous avez accepte l'aide de l'etudiant".$demandeur["prenom"]." ".$demandeur["nom"]." pour l'annonce : ".$demandeur["commentaire"].". Merci de prendre contact avec cette personne à l'adresse suivante : ".$helper["email"])
+        ->content("Vous avez accepte l'aide de l'etudiant ".$helper["prenom"]." ".$helper["nom"]." pour l'annonce : ".$demandeur["commentaire"].". Merci de prendre contact avec cette personne à l'adresse suivante : ".$helper["email"])
         ->send();
 
     $mail_helper = new Helper_Mail();
     $mail_helper
         ->to($helper["email"])
         ->sujet("Acceptation d'aide")
-        ->content("Votre aide a ete acceptée pour l'annonce : ".$demandeur["commentaire"].". Merci de prendre contact à l'adresse suivante : ".$demandeur["email"])
+        ->content("Votre aide a ete acceptée pour l'annonce : ".$demandeur["commentaire"]." de ".$demandeur["prenom"]." ".$demandeur["nom"]." . Merci de prendre contact à l'adresse suivante : ".$demandeur["email"])
         ->send();
 
 }
