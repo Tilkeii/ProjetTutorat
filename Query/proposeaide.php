@@ -25,7 +25,7 @@ if(isset($_POST["idannonce"])){
     $mail_demandeur
         ->to($demandeur["email"])
         ->sujet("Proposition d'aide")
-        ->content("L'etudiant".$demandeur["prenom"]." ".$demandeur["nom"]." a repondu a votre demande d'aide : ".$demandeur["commentaire"].", merci de confirmer dans votre espace");
+        ->content("L'etudiant ".$helper["prenom"]." ".$helper["nom"]." a repondu a votre demande d'aide : ".$demandeur["commentaire"].", merci de confirmer dans votre espace");
 
     $mail_helper = new Helper_Mail();
     $mail_helper
