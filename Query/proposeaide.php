@@ -15,7 +15,7 @@ if(isset($_POST["idannonce"])){
     $demandeur = $req->fetch();
 
     // Mail helper
-    $req = $bdd->prepare('SELECT email
+    $req = $bdd->prepare('SELECT email,nom,prenom
                           FROM etudiant
                           WHERE etudiant.numero_etudiant = :idetu');
     $req->execute(array('idetu' => $_SESSION["login"])) or die(print_r('2'.$bdd->errorInfo(), true));
